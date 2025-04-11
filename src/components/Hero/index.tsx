@@ -6,17 +6,41 @@ import { useState, useEffect } from "react";
 const GlowingCube = ({
   onHover,
   onHoverEnd,
-  nextLetter,
+  isBomb,
+  isRevealed,
+  onReveal,
+  adjacentBombs,
 }: {
   onHover: () => void;
   onHoverEnd: () => void;
-  nextLetter: string;
+  isBomb: boolean;
+  isRevealed: boolean;
+  onReveal: () => void;
+  adjacentBombs: number;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [letter, setLetter] = useState("");
+
+  const getNumberColor = (num: number) => {
+    const colors: { [key: number]: string } = {
+      1: "text-blue-500",
+      2: "text-green-500",
+      3: "text-red-500",
+      4: "text-purple-500",
+      5: "text-yellow-500",
+      6: "text-cyan-500",
+      7: "text-orange-500",
+      8: "text-pink-500",
+    };
+    return colors[num] || "text-white";
+  };
+
+  const handleClick = () => {
+    if (!isRevealed) {
+      onReveal();
+    }
+  };
 
   const handleMouseEnter = () => {
-    setLetter(nextLetter);
     setIsHovered(true);
     onHover();
   };
@@ -30,30 +54,37 @@ const GlowingCube = ({
 
   return (
     <div
-      className="relative h-8 w-8 border-[0.5px] border-blue-500/10"
+      className="relative h-8 w-8 cursor-pointer border-[1px] border-slate-600"
       style={{ margin: 0 }}
+      onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div
-        className={`absolute inset-0 bg-gradient-to-br transition-all duration-300 ease-out
+        className={`absolute inset-0 transition-all duration-300 ease-out
           ${
-            isHovered
-              ? "from-blue-500/30 to-emerald-500/30 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
-              : "from-slate-800/5 to-slate-900/5"
+            isRevealed
+              ? isBomb
+                ? "bg-red-500/50"
+                : "bg-slate-700"
+              : isHovered
+                ? "bg-slate-600"
+                : "bg-slate-800"
           }
         `}
       >
         <div
-          className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-500/20 to-emerald-500/20 text-sm font-medium transition-all duration-300 ease-out
-            ${isHovered ? "scale-105 opacity-100" : "scale-100 opacity-0"}
+          className={`absolute inset-0 flex items-center justify-center text-sm font-bold transition-all duration-300 ease-out
+            ${isRevealed ? "opacity-100" : "opacity-0"}
           `}
         >
-          <span
-            className={`transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"} text-white`}
-          >
-            {letter}
-          </span>
+          {isRevealed && (
+            <span
+              className={`${isBomb ? "text-white" : getNumberColor(adjacentBombs)}`}
+            >
+              {isBomb ? "💣" : adjacentBombs > 0 ? adjacentBombs : ""}
+            </span>
+          )}
         </div>
       </div>
     </div>
@@ -62,26 +93,82 @@ const GlowingCube = ({
 
 const Hero = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [letterIndex, setLetterIndex] = useState(0);
-  const letters = "SMARTFLOW";
-  const [hoveredLetters, setHoveredLetters] = useState<string[]>([]);
+  const [gameOver, setGameOver] = useState(false);
+  const [revealedCubes, setRevealedCubes] = useState(new Set<number>());
   const [dimensions, setDimensions] = useState({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
   });
 
-  // Calculate number of cubes needed based on viewport size
-  const cubeSize = 32; // 2rem = 32px
-  const cols = Math.ceil(dimensions.width / cubeSize);
-  const rows = Math.ceil(dimensions.height / cubeSize);
-  const totalCubes = cols * rows;
+  // Calculate grid size based on viewport and cube size
+  const CUBE_SIZE = 32; // 2rem = 32px
+  const GRID_COLS = Math.ceil(dimensions.width / CUBE_SIZE);
+  const GRID_ROWS = Math.ceil(dimensions.height / CUBE_SIZE);
+  const totalCubes = GRID_COLS * GRID_ROWS;
+  const BOMB_PERCENTAGE = 0.15; // 15% of cells will be bombs
+  const BOMB_COUNT = Math.floor(totalCubes * BOMB_PERCENTAGE);
 
-  const cubes = Array.from({ length: totalCubes }, (_, i) => i);
+  // Generate bombs
+  const [bombs] = useState(() => {
+    const bombSet = new Set<number>();
+    while (bombSet.size < BOMB_COUNT) {
+      bombSet.add(Math.floor(Math.random() * totalCubes));
+    }
+    return bombSet;
+  });
 
-  const handleCubeHover = () => {
-    const nextLetter = letters[letterIndex];
-    setHoveredLetters((prev) => [...prev, nextLetter]);
-    setLetterIndex((current) => (current + 1) % letters.length);
+  const getAdjacentCubes = (index: number) => {
+    const row = Math.floor(index / GRID_COLS);
+    const col = index % GRID_COLS;
+    const adjacent: number[] = [];
+
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (i === 0 && j === 0) continue;
+        const newRow = row + i;
+        const newCol = col + j;
+        if (
+          newRow >= 0 &&
+          newRow < GRID_ROWS &&
+          newCol >= 0 &&
+          newCol < GRID_COLS
+        ) {
+          adjacent.push(newRow * GRID_COLS + newCol);
+        }
+      }
+    }
+    return adjacent;
+  };
+
+  const countAdjacentBombs = (index: number) => {
+    const adjacent = getAdjacentCubes(index);
+    return adjacent.filter((idx) => bombs.has(idx)).length;
+  };
+
+  const handleReveal = (index: number) => {
+    if (gameOver) return;
+
+    if (bombs.has(index)) {
+      setGameOver(true);
+      setRevealedCubes(new Set(Array.from(bombs)));
+    } else {
+      const newRevealed = new Set(revealedCubes);
+      const revealArea = (idx: number) => {
+        if (newRevealed.has(idx)) return;
+        newRevealed.add(idx);
+
+        if (countAdjacentBombs(idx) === 0) {
+          getAdjacentCubes(idx).forEach((adjacent) => {
+            if (!bombs.has(adjacent)) {
+              revealArea(adjacent);
+            }
+          });
+        }
+      };
+
+      revealArea(index);
+      setRevealedCubes(newRevealed);
+    }
   };
 
   // Update dimensions on window resize
@@ -97,23 +184,27 @@ const Hero = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const cubes = Array.from({ length: totalCubes }, (_, i) => i);
+
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-[#0a0f2c]">
-      {/* Cube grid background */}
+      {/* Full-screen Minesweeper grid */}
       <div
-        className="absolute inset-0 grid gap-0"
+        className="fixed inset-0 grid gap-0"
         style={{
-          gridTemplateColumns: `repeat(${cols}, ${cubeSize}px)`,
-          gridTemplateRows: `repeat(${rows}, ${cubeSize}px)`,
-          zIndex: 1,
+          gridTemplateColumns: `repeat(${GRID_COLS}, ${CUBE_SIZE}px)`,
+          gridTemplateRows: `repeat(${GRID_ROWS}, ${CUBE_SIZE}px)`,
         }}
       >
         {cubes.map((index) => (
           <GlowingCube
             key={index}
-            onHover={handleCubeHover}
+            onHover={() => setHoveredIndex(index)}
             onHoverEnd={() => setHoveredIndex(null)}
-            nextLetter={letters[letterIndex]}
+            isBomb={bombs.has(index)}
+            isRevealed={revealedCubes.has(index)}
+            onReveal={() => handleReveal(index)}
+            adjacentBombs={countAdjacentBombs(index)}
           />
         ))}
       </div>
