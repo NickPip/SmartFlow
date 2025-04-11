@@ -22,16 +22,16 @@ const GlowingCube = ({
 
   const getNumberColor = (num: number) => {
     const colors: { [key: number]: string } = {
-      1: "text-blue-500",
-      2: "text-green-500",
-      3: "text-red-500",
-      4: "text-purple-500",
-      5: "text-yellow-500",
-      6: "text-cyan-500",
-      7: "text-orange-500",
-      8: "text-pink-500",
+      1: "text-blue-700", // Darker blue
+      2: "text-green-700", // Darker green
+      3: "text-red-700", // Darker red
+      4: "text-blue-900", // Navy blue
+      5: "text-red-900", // Very dark red
+      6: "text-cyan-800", // Dark cyan
+      7: "text-gray-900", // Almost black
+      8: "text-gray-700", // Dark gray
     };
-    return colors[num] || "text-white";
+    return colors[num] || "text-gray-900";
   };
 
   const handleClick = () => {
@@ -54,7 +54,7 @@ const GlowingCube = ({
 
   return (
     <div
-      className="relative h-8 w-8 cursor-pointer border-[1px] border-slate-600"
+      className="relative h-8 w-8 cursor-pointer border-b-[3px] border-l-[3px] border-r-[3px] border-t-[3px] border-b-gray-600 border-l-white border-r-gray-600 border-t-white"
       style={{ margin: 0 }}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
@@ -65,11 +65,11 @@ const GlowingCube = ({
           ${
             isRevealed
               ? isBomb
-                ? "bg-red-500/50"
-                : "bg-slate-700"
+                ? "bg-red-600"
+                : "bg-gray-300"
               : isHovered
-                ? "bg-slate-600"
-                : "bg-slate-800"
+                ? "bg-gray-300"
+                : "bg-gray-400"
           }
         `}
       >
@@ -80,7 +80,7 @@ const GlowingCube = ({
         >
           {isRevealed && (
             <span
-              className={`${isBomb ? "text-white" : getNumberColor(adjacentBombs)}`}
+              className={`${isBomb ? "text-black" : getNumberColor(adjacentBombs)}`}
             >
               {isBomb ? "💣" : adjacentBombs > 0 ? adjacentBombs : ""}
             </span>
@@ -99,6 +99,7 @@ const Hero = () => {
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
   });
+  const [hoveredAI, setHoveredAI] = useState(false);
 
   // Calculate grid size based on viewport and cube size
   const CUBE_SIZE = 32; // 2rem = 32px
@@ -187,10 +188,10 @@ const Hero = () => {
   const cubes = Array.from({ length: totalCubes }, (_, i) => i);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#0a0f2c]">
-      {/* Full-screen Minesweeper grid */}
+    <section className="relative h-screen w-full overflow-hidden bg-[#c0c0c0]">
+      {/* Minesweeper grid */}
       <div
-        className="fixed inset-0 grid gap-0"
+        className="absolute inset-0 grid gap-0 bg-[#c0c0c0]"
         style={{
           gridTemplateColumns: `repeat(${GRID_COLS}, ${CUBE_SIZE}px)`,
           gridTemplateRows: `repeat(${GRID_ROWS}, ${CUBE_SIZE}px)`,
@@ -210,20 +211,20 @@ const Hero = () => {
       </div>
 
       {/* Content overlay */}
-      <div className="pointer-events-none relative z-10 mx-auto flex min-h-screen max-w-7xl items-center justify-center px-6 py-24 lg:px-8">
+      <div className="pointer-events-none relative z-10 mx-auto flex h-full max-w-7xl items-center justify-center px-6 py-24 lg:px-8">
         <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="pointer-events-auto space-y-12 rounded-2xl bg-slate-900/20 p-12 backdrop-blur-md"
+            className="pointer-events-auto space-y-12 rounded-2xl border-2 border-gray-400 bg-white/90 p-12 backdrop-blur-sm"
           >
             {/* Eyebrow text */}
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-block rounded-full bg-blue-500/10 px-4 py-1.5 text-sm font-medium uppercase tracking-wider text-blue-400"
+              className="inline-block rounded-full bg-blue-500/10 px-4 py-1.5 text-sm font-medium uppercase tracking-wider text-blue-600"
             >
               Software Engineering Excellence
             </motion.p>
@@ -234,12 +235,12 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl"
+                className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl"
               >
-                <span className="block bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
                   Custom Software
                 </span>
-                <span className="mt-2 block bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                <span className="mt-2 block bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 bg-clip-text text-transparent">
                   Development Services
                 </span>
               </motion.h1>
@@ -249,7 +250,7 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-300/90"
+                className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-600"
               >
                 Transform your ideas into powerful solutions. We build scalable,
                 innovative software that drives business growth and enhances
@@ -270,21 +271,20 @@ const Hero = () => {
                   boxShadow: "0 0 20px rgba(59,130,246,0.5)",
                 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-all duration-200"
+                className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-all duration-200"
               >
                 <span className="relative z-10">Let's Talk</span>
-                <div className="absolute inset-0 -translate-y-full bg-gradient-to-r from-blue-600 to-blue-700 transition-transform duration-300 group-hover:translate-y-0" />
+                <div className="absolute inset-0 -translate-y-full bg-gradient-to-r from-blue-700 to-blue-800 transition-transform duration-300 group-hover:translate-y-0" />
               </motion.button>
               <motion.button
                 whileHover={{
                   scale: 1.02,
                   x: 5,
-                  color: "#fff",
                 }}
-                className="flex items-center gap-2 text-base font-semibold text-slate-300 transition-colors"
+                className="flex items-center gap-2 text-base font-semibold text-gray-600 transition-colors hover:text-blue-600"
               >
                 View Our Work
-                <span className="text-blue-400 transition-transform duration-200 group-hover:translate-x-1">
+                <span className="text-blue-600 transition-transform duration-200 group-hover:translate-x-1">
                   →
                 </span>
               </motion.button>
@@ -292,12 +292,6 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
-
-      {/* Additional ambient lighting */}
-      <div
-        className="bg-gradient-radial pointer-events-none absolute inset-0 from-blue-500/5 via-transparent to-transparent"
-        style={{ zIndex: 2 }}
-      ></div>
     </section>
   );
 };
