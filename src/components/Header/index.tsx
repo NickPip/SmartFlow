@@ -51,7 +51,11 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-[#0a0f2c]/95 backdrop-blur-md">
+    <header
+      className={`fixed top-0 z-50 w-full backdrop-blur-md transition-all duration-300 ${
+        sticky ? "bg-[#0a0f2c]/95 py-4" : "bg-transparent py-5"
+      }`}
+    >
       {/* Cosmic background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 to-transparent"></div>
@@ -74,37 +78,7 @@ const Header = () => {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-24 items-center justify-between">
-          {/* Hamburger Menu Button */}
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-slate-800/50"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              )}
-            </svg>
-          </button>
-
+        <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex flex-shrink-0 items-center">
             <Link href="/" className="flex items-center gap-4">
@@ -141,35 +115,77 @@ const Header = () => {
                       transform="rotate(150, 12, 12)"
                     />
                   </g>
-
                   {/* Center nucleus */}
                   <circle cx="12" cy="12" r="1.5" className="fill-blue-500" />
                 </svg>
               </div>
               <div className="flex flex-col gap-0">
-                <div className="relative h-7 w-[140px]">
-                  <span className="invisible text-xl font-bold text-slate-800 dark:text-white">
-                    ATOMIC IMPACT
-                  </span>
-                  <span className="group absolute left-0 top-0 text-xl font-bold text-slate-800 dark:text-white">
-                    <span className="inline-block w-[140px] group-hover:hidden">
-                      AI
-                    </span>
-                    <span className="invisible absolute left-0 group-hover:visible">
-                      <span className="group-hover:animate-typing inline-block overflow-hidden whitespace-nowrap border-r-2 border-blue-500 [animation-fill-mode:backwards]">
-                        ATOMIC IMPACT
-                      </span>
-                    </span>
-                  </span>
+                <div className="group relative h-7 w-[180px]">
+                  <div className="absolute left-0 top-0 text-xl font-bold text-white">
+                    <span className="block group-hover:hidden">AI</span>
+                    <div className="group-hover:animate-typing invisible absolute left-0 top-0 w-0 overflow-hidden whitespace-nowrap border-r-2 border-blue-500 group-hover:visible">
+                      ATOMIC IMPACT
+                    </div>
+                  </div>
                 </div>
-                <div className="h-5 w-[140px]">
-                  <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
+                <div className="h-5 w-[180px]">
+                  <span className="text-sm font-medium text-gray-300">
                     ENGINEERING
                   </span>
                 </div>
               </div>
             </Link>
           </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:block">
+            <ul className="flex space-x-8">
+              {menuItems.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className={`text-sm font-medium transition-colors ${
+                      pathUrl === item.href
+                        ? "text-blue-500"
+                        : "text-gray-300 hover:text-white"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-slate-800/50 md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span className="sr-only">Open main menu</span>
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+            >
+              {isMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              )}
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -177,14 +193,18 @@ const Header = () => {
       <div
         className={`${
           isMenuOpen ? "block" : "hidden"
-        } absolute w-full bg-[#0a0f2c] pb-3 pt-2`}
+        } absolute w-full bg-[#0a0f2c] pb-3 pt-2 md:hidden`}
       >
         <div className="space-y-1 px-4">
           {menuItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-slate-800"
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathUrl === item.href
+                  ? "bg-slate-800 text-white"
+                  : "text-gray-300 hover:bg-slate-800 hover:text-white"
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               {item.name}

@@ -14,6 +14,24 @@ const config: Config = {
         ...colors,
         // primary: "#1A202C",
       },
+      animation: {
+        typing: "typing 2.5s steps(13) forwards, blink 1s step-end infinite",
+        "spin-slow": "spin 8s linear infinite",
+      },
+      keyframes: {
+        typing: {
+          from: { width: "0" },
+          to: { width: "180px" },
+        },
+        blink: {
+          "50%": { "border-color": "transparent" },
+        },
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
     },
   },
   plugins: [require("tailgrids/plugin")],

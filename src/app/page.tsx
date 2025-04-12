@@ -7,6 +7,7 @@ import Contact from "@/components/Contact";
 import Faq from "@/components/Faq";
 import Features from "@/components/Features";
 import Hero from "@/components/Hero";
+import NewHero from "@/components/Hero/NewHero";
 import Pricing from "@/components/Pricing";
 import Team from "@/components/Team";
 import Testimonials from "@/components/Testimonials";
@@ -23,19 +24,19 @@ export default function Home() {
   const posts = getAllPosts(["title", "date", "excerpt", "coverImage", "slug"]);
 
   return (
-    <main>
-      <ScrollUp />
+    <>
+      <NewHero />
       <Hero />
-      <Features />
       <About />
-      <CallToAction />
+      <Features />
+      <Clients />
       <Pricing />
       <Testimonials />
       <Faq />
-      <Team />
       <HomeBlogSection posts={posts} />
       <Contact />
-      <Clients />
-    </main>
+      <CallToAction />
+      <ScrollUp />
+    </>
   );
 }

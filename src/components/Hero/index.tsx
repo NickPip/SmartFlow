@@ -99,7 +99,6 @@ const Hero = () => {
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
   });
-  const [hoveredAI, setHoveredAI] = useState(false);
 
   // Calculate grid size based on viewport and cube size
   const CUBE_SIZE = 32; // 2rem = 32px
@@ -256,39 +255,20 @@ const Hero = () => {
                 innovative software that drives business growth and enhances
                 user experience.
               </motion.p>
-            </div>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-10 flex items-center justify-center gap-x-6"
-            >
-              <motion.button
-                whileHover={{
-                  scale: 1.02,
-                  boxShadow: "0 0 20px rgba(59,130,246,0.5)",
-                }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-all duration-200"
+              {/* CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                className="mt-10 flex items-center justify-center"
               >
-                <span className="relative z-10">Let's Talk</span>
-                <div className="absolute inset-0 -translate-y-full bg-gradient-to-r from-blue-700 to-blue-800 transition-transform duration-300 group-hover:translate-y-0" />
-              </motion.button>
-              <motion.button
-                whileHover={{
-                  scale: 1.02,
-                  x: 5,
-                }}
-                className="flex items-center gap-2 text-base font-semibold text-gray-600 transition-colors hover:text-blue-600"
-              >
-                View Our Work
-                <span className="text-blue-600 transition-transform duration-200 group-hover:translate-x-1">
-                  →
-                </span>
-              </motion.button>
-            </motion.div>
+                <button className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-all duration-200">
+                  <span className="relative z-10">Get Started</span>
+                  <div className="absolute inset-0 -translate-y-full bg-gradient-to-r from-blue-700 to-blue-800 transition-transform duration-300 group-hover:translate-y-0" />
+                </button>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
