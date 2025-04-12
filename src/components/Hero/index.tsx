@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
 const GlowingCube = ({
   onHover,
@@ -91,6 +91,47 @@ const GlowingCube = ({
   );
 };
 
+interface CountUpProps {
+  start: number;
+  end: number;
+  duration: number;
+  suffix?: string;
+}
+
+const CountUp = ({ start, end, duration, suffix = "" }: CountUpProps) => {
+  const [count, setCount] = useState(start);
+  const countRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    let startTime: number | undefined;
+    let animationFrameId: number;
+
+    const updateCount = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+      const currentCount = Math.floor(progress * (end - start) + start);
+      setCount(currentCount);
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(updateCount);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(updateCount);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [start, end, duration]);
+
+  return (
+    <span>
+      {count}
+      {suffix}
+    </span>
+  );
+};
+
 const Hero = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [gameOver, setGameOver] = useState(false);
@@ -174,10 +215,7 @@ const Hero = () => {
   // Update dimensions on window resize
   useEffect(() => {
     const handleResize = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
 
     window.addEventListener("resize", handleResize);
@@ -185,6 +223,10 @@ const Hero = () => {
   }, []);
 
   const cubes = Array.from({ length: totalCubes }, (_, i) => i);
+
+  // Add ref and inView state for stats animation
+  const statsRef = useRef(null);
+  const isInView = useInView(statsRef, { once: true });
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-[#c0c0c0]">
@@ -225,7 +267,7 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="inline-block rounded-full bg-blue-500/10 px-4 py-1.5 text-sm font-medium uppercase tracking-wider text-blue-600"
             >
-              Software Engineering Excellence
+              About Our Company
             </motion.p>
 
             {/* Main headline */}
@@ -237,10 +279,10 @@ const Hero = () => {
                 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl"
               >
                 <span className="block bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                  Custom Software
+                  We Build
                 </span>
                 <span className="mt-2 block bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 bg-clip-text text-transparent">
-                  Development Services
+                  Digital Excellence
                 </span>
               </motion.h1>
 
@@ -251,22 +293,63 @@ const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-600"
               >
-                Transform your ideas into powerful solutions. We build scalable,
-                innovative software that drives business growth and enhances
-                user experience.
+                Founded in 2024, we are a team of passionate developers,
+                designers, and innovators dedicated to creating exceptional
+                digital experiences. Our mission is to transform complex
+                challenges into elegant solutions that drive business growth.
               </motion.p>
 
-              {/* CTA Button */}
+              {/* Stats */}
               <motion.div
+                ref={statsRef}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
-                className="mt-10 flex items-center justify-center"
+                className="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-3"
               >
-                <button className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-all duration-200">
-                  <span className="relative z-10">Get Started</span>
-                  <div className="absolute inset-0 -translate-y-full bg-gradient-to-r from-blue-700 to-blue-800 transition-transform duration-300 group-hover:translate-y-0" />
-                </button>
+                <div>
+                  <motion.div
+                    className="text-3xl font-bold text-blue-600"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                  >
+                    {isInView && (
+                      <CountUp start={0} end={50} duration={2} suffix="+" />
+                    )}
+                  </motion.div>
+                  <div className="text-sm text-gray-500">
+                    Projects Completed
+                  </div>
+                </div>
+                <div>
+                  <motion.div
+                    className="text-3xl font-bold text-blue-600"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                  >
+                    {isInView && (
+                      <CountUp start={0} end={15} duration={2} suffix="+" />
+                    )}
+                  </motion.div>
+                  <div className="text-sm text-gray-500">Team Members</div>
+                </div>
+                <div>
+                  <motion.div
+                    className="text-3xl font-bold text-blue-600"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                  >
+                    {isInView && (
+                      <CountUp start={0} end={100} duration={2} suffix="%" />
+                    )}
+                  </motion.div>
+                  <div className="text-sm text-gray-500">
+                    Client Satisfaction
+                  </div>
+                </div>
               </motion.div>
             </div>
           </motion.div>
