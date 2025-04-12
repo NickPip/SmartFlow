@@ -1,22 +1,16 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
-import { useTheme } from "next-themes";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-
-import menuData from "./menuData";
+import { useModal } from "@/context/ModalContext";
 
 const Header = () => {
-  const { data: session } = useSession();
-
   const pathUrl = usePathname();
-  // Navbar toggle
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [sticky, setSticky] = useState(false);
+  const { openContactModal } = useModal();
 
   // Sticky Navbar
-  const [sticky, setSticky] = useState(false);
   const handleStickyNavbar = () => {
     if (window.scrollY >= 80) {
       setSticky(true);
@@ -24,29 +18,15 @@ const Header = () => {
       setSticky(false);
     }
   };
+
   useEffect(() => {
     window.addEventListener("scroll", handleStickyNavbar);
-  });
-
-  // submenu handler
-  const [openIndex, setOpenIndex] = useState(-1);
-  const handleSubmenu = (index: any) => {
-    if (openIndex === index) {
-      setOpenIndex(-1);
-    } else {
-      setOpenIndex(index);
-    }
-  };
-
-  const { theme, setTheme } = useTheme();
+    return () => window.removeEventListener("scroll", handleStickyNavbar);
+  }, []);
 
   const menuItems = [
-    { name: "Home", href: "/" },
-    { name: "Expertise", href: "/expertise" },
-    { name: "History", href: "/history" },
-    { name: "Team", href: "/team" },
-    { name: "Blog", href: "/blog" },
-    { name: "Careers", href: "/careers" },
+    { name: "About", href: "/about" },
+    { name: "Portfolio", href: "/portfolio" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -146,9 +126,9 @@ const Header = () => {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-12 items-center justify-between">
+        <div className="flex h-12 items-center">
           {/* Logo */}
-          <div className="flex flex-shrink-0 items-center">
+          <div className="flex w-1/3 flex-shrink-0 items-center">
             <Link href="/" className="flex items-center gap-3">
               <div className="relative">
                 <svg
@@ -216,17 +196,17 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:block">
-            <ul className="flex space-x-8">
+          {/* Desktop Navigation - Centered */}
+          <nav className="hidden w-1/3 md:block">
+            <ul className="flex justify-center space-x-12">
               {menuItems.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
                     className={`text-sm font-medium transition-colors ${
                       pathUrl === item.href
-                        ? "text-indigo-400"
-                        : "text-gray-400 hover:text-white"
+                        ? "text-white"
+                        : "text-gray-300 hover:text-white"
                     }`}
                   >
                     {item.name}
@@ -235,6 +215,23 @@ const Header = () => {
               ))}
             </ul>
           </nav>
+
+          {/* Get Started and Work with us buttons */}
+          <div className="hidden w-1/3 justify-end gap-4 md:flex">
+            <Link
+              href="/work-with-us"
+              className="rounded-lg border border-gray-700 px-4 py-2 text-sm font-medium text-gray-300 transition-colors hover:border-gray-600 hover:text-white"
+            >
+              Work with us
+            </Link>
+            <button
+              type="button"
+              onClick={openContactModal}
+              className="z-[60] rounded-lg bg-teal-400 px-6 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-teal-300"
+            >
+              Get started
+            </button>
+          </div>
 
           {/* Mobile menu button */}
           <button
@@ -289,6 +286,22 @@ const Header = () => {
               {item.name}
             </Link>
           ))}
+          <Link
+            href="/work-with-us"
+            className="mt-4 block w-full rounded-lg border border-gray-700 px-3 py-2 text-center text-base font-medium text-gray-300"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Work with us
+          </Link>
+          <button
+            onClick={() => {
+              openContactModal();
+              setIsMenuOpen(false);
+            }}
+            className="mt-2 block w-full rounded-lg bg-teal-400 px-3 py-2 text-center text-base font-medium text-gray-900"
+          >
+            Get started
+          </button>
         </div>
       </div>
     </header>

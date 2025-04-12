@@ -1,20 +1,24 @@
 "use client";
 
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import ScrollToTop from "@/components/ScrollToTop";
-import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "next-themes";
-import "../styles/index.css";
-import "../styles/prism-vsc-dark-plus.css";
-import ToasterContext from "./api/contex/ToasetContex";
-import { useEffect, useState } from "react";
-import PreLoader from "@/components/Common/PreLoader";
 import { JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+import { useEffect, useState } from "react";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "next-auth/react";
+
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
+import PreLoader from "@/components/Common/PreLoader";
+import ToasterContext from "@/components/Common/ToasterContext";
+import ContactModal from "@/components/ContactModal";
+import { ModalProvider } from "@/context/ModalContext";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-jetbrains",
 });
 
 export default function RootLayout({
@@ -29,31 +33,36 @@ export default function RootLayout({
   }, []);
 
   return (
-    <html suppressHydrationWarning={true} className={jetbrainsMono.className}>
+    <html lang="en" suppressHydrationWarning>
       {/*
         <head /> will contain the components returned by the nearest parent
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
 
-      <body>
-        {loading ? (
-          <PreLoader />
-        ) : (
-          <SessionProvider>
-            <ThemeProvider
-              attribute="class"
-              enableSystem={false}
-              defaultTheme="light"
-            >
-              <ToasterContext />
-              <Header />
-              {children}
-              <Footer />
-              <ScrollToTop />
-            </ThemeProvider>
-          </SessionProvider>
-        )}
+      <body className={jetbrainsMono.className}>
+        <SessionProvider>
+          <ThemeProvider
+            attribute="class"
+            enableSystem={false}
+            defaultTheme="dark"
+          >
+            <ModalProvider>
+              {loading ? (
+                <PreLoader />
+              ) : (
+                <>
+                  <ToasterContext />
+                  <Header />
+                  {children}
+                  <Footer />
+                  <ScrollToTop />
+                  <ContactModal />
+                </>
+              )}
+            </ModalProvider>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
