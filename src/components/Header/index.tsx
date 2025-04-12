@@ -84,39 +84,50 @@ const Header = () => {
             <Link href="/" className="flex items-center gap-3">
               <div className="relative">
                 <svg
-                  viewBox="0 0 24 24"
-                  className="animate-spin-slow h-12 w-12"
+                  viewBox="0 0 24 32"
+                  className="animate-hover h-12 w-12"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ transformOrigin: "center" }}
                 >
-                  {/* Three orbital rings */}
-                  <g className="stroke-blue-500" strokeWidth="1.5">
-                    <ellipse
-                      cx="12"
-                      cy="12"
-                      rx="5"
-                      ry="10"
-                      transform="rotate(30, 12, 12)"
+                  {/* Rocket body */}
+                  <path
+                    className="fill-blue-500 stroke-blue-400"
+                    strokeWidth="1"
+                    d="M12 12L14 17L14 26L12 29L10 26L10 17L12 12Z"
+                  />
+                  {/* Rocket fins */}
+                  <path
+                    className="fill-blue-600 stroke-blue-400"
+                    strokeWidth="1"
+                    d="M10 24L8 26L8 28L10 26M14 24L16 26L16 28L14 26"
+                  />
+                  {/* Window */}
+                  <circle
+                    cx="12"
+                    cy="20"
+                    r="1.5"
+                    className="fill-white/90 stroke-blue-400"
+                    strokeWidth="0.5"
+                  />
+                  {/* Engine flames */}
+                  <g className="animate-pulse">
+                    <path
+                      className="fill-orange-500/80"
+                      d="M11 29L12 32L13 29L12 28.5L11 29"
                     />
-                    <ellipse
-                      cx="12"
-                      cy="12"
-                      rx="5"
-                      ry="10"
-                      transform="rotate(90, 12, 12)"
-                    />
-                    <ellipse
-                      cx="12"
-                      cy="12"
-                      rx="5"
-                      ry="10"
-                      transform="rotate(150, 12, 12)"
+                    <path
+                      className="fill-yellow-500/80"
+                      d="M11.5 29L12 31L12.5 29L12 28.75L11.5 29"
                     />
                   </g>
-                  {/* Center nucleus */}
-                  <circle cx="12" cy="12" r="1.5" className="fill-blue-500" />
+                  {/* Stars */}
+                  <g className="animate-twinkle">
+                    <circle cx="6" cy="16" r="0.3" className="fill-white" />
+                    <circle cx="18" cy="18" r="0.3" className="fill-white" />
+                    <circle cx="16" cy="14" r="0.3" className="fill-white" />
+                    <circle cx="8" cy="22" r="0.3" className="fill-white" />
+                  </g>
                 </svg>
               </div>
               <div className="flex flex-col gap-0">
