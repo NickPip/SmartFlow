@@ -17,6 +17,9 @@ const config: Config = {
       animation: {
         typing: "typing 2.5s steps(13) forwards, blink 1s step-end infinite",
         "spin-slow": "spin 8s linear infinite",
+        "slide-slow": "slide 20s linear infinite",
+        "slide-slower": "slide 30s linear infinite",
+        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
       keyframes: {
         typing: {
@@ -25,6 +28,11 @@ const config: Config = {
         },
         blink: {
           "50%": { "border-color": "transparent" },
+        },
+        slide: {
+          "0%": { transform: "translate(0, 0)" },
+          "50%": { transform: "translate(-50px, -50px)" },
+          "100%": { transform: "translate(0, 0)" },
         },
       },
       backgroundImage: {
