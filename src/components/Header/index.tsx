@@ -52,28 +52,96 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full backdrop-blur-md transition-all duration-300 ${
-        sticky ? "bg-[#0a0f2c]/95 py-2" : "bg-transparent py-3"
+      className={`fixed top-0 z-50 w-full backdrop-blur-sm transition-all duration-300 ${
+        sticky ? "bg-[#030408]/95 py-2" : "bg-[#020305]/90 py-3"
       }`}
     >
       {/* Cosmic background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 to-transparent"></div>
+        <div className="from-purple-900/3 absolute inset-0 bg-gradient-to-b to-transparent"></div>
+        {/* Stars */}
         <div
-          className="absolute h-[1px] w-[1px] animate-pulse bg-white"
+          className="absolute h-[2px] w-[2px] animate-pulse bg-white/30"
           style={{ left: "15%", top: "30%" }}
         ></div>
         <div
-          className="absolute h-[2px] w-[2px] animate-pulse bg-white"
+          className="absolute h-[3px] w-[3px] animate-pulse bg-white/25"
           style={{ left: "45%", top: "20%" }}
         ></div>
         <div
-          className="absolute h-[1px] w-[1px] animate-pulse bg-white"
+          className="absolute h-[2px] w-[2px] animate-pulse bg-white/35"
           style={{ left: "75%", top: "40%" }}
         ></div>
         <div
-          className="absolute h-[1.5px] w-[1.5px] animate-pulse bg-white"
+          className="absolute h-[2.5px] w-[2.5px] animate-pulse bg-white/30"
           style={{ left: "85%", top: "25%" }}
+        ></div>
+        {/* Additional stars */}
+        <div
+          className="absolute h-[2px] w-[2px] animate-pulse bg-white/25"
+          style={{ left: "25%", top: "15%" }}
+        ></div>
+        <div
+          className="absolute h-[2px] w-[2px] animate-pulse bg-white/30"
+          style={{ left: "55%", top: "35%" }}
+        ></div>
+        <div
+          className="absolute h-[3px] w-[3px] animate-pulse bg-white/20"
+          style={{ left: "65%", top: "15%" }}
+        ></div>
+        <div
+          className="absolute h-[2.5px] w-[2.5px] animate-pulse bg-white/35"
+          style={{ left: "35%", top: "45%" }}
+        ></div>
+        <div
+          className="absolute h-[2px] w-[2px] animate-pulse bg-white/30"
+          style={{ left: "95%", top: "35%" }}
+        ></div>
+        <div
+          className="absolute h-[2px] w-[2px] animate-pulse bg-white/25"
+          style={{ left: "5%", top: "25%" }}
+        ></div>
+        <div
+          className="absolute h-[3px] w-[3px] animate-pulse bg-white/20"
+          style={{ left: "88%", top: "12%" }}
+        ></div>
+        <div
+          className="absolute h-[2px] w-[2px] animate-pulse bg-white/30"
+          style={{ left: "12%", top: "42%" }}
+        ></div>
+        {/* Star clusters */}
+        <div
+          className="absolute h-[1.5px] w-[1.5px] animate-pulse bg-white/40"
+          style={{ left: "28%", top: "38%" }}
+        ></div>
+        <div
+          className="absolute h-[1.5px] w-[1.5px] animate-pulse bg-white/40"
+          style={{ left: "29%", top: "40%" }}
+        ></div>
+        <div
+          className="absolute h-[1.5px] w-[1.5px] animate-pulse bg-white/40"
+          style={{ left: "27%", top: "39%" }}
+        ></div>
+        <div
+          className="absolute h-[1.5px] w-[1.5px] animate-pulse bg-white/40"
+          style={{ left: "72%", top: "28%" }}
+        ></div>
+        <div
+          className="absolute h-[1.5px] w-[1.5px] animate-pulse bg-white/40"
+          style={{ left: "73%", top: "30%" }}
+        ></div>
+        <div
+          className="absolute h-[1.5px] w-[1.5px] animate-pulse bg-white/40"
+          style={{ left: "71%", top: "29%" }}
+        ></div>
+        {/* Additional cosmic dust */}
+        <div
+          className="absolute left-0 top-0 h-full w-full opacity-20"
+          style={{
+            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(20, 20, 35, 0.15) 0%, transparent 50%),
+                             radial-gradient(circle at 20% 30%, rgba(25, 25, 45, 0.1) 0%, transparent 40%),
+                             radial-gradient(circle at 80% 20%, rgba(20, 20, 35, 0.15) 0%, transparent 35%)`,
+          }}
         ></div>
       </div>
 
@@ -92,13 +160,13 @@ const Header = () => {
                 >
                   {/* Rocket body */}
                   <path
-                    className="fill-blue-500 stroke-blue-400"
+                    className="fill-indigo-600 stroke-indigo-500"
                     strokeWidth="1"
                     d="M12 12L14 17L14 26L12 29L10 26L10 17L12 12Z"
                   />
                   {/* Rocket fins */}
                   <path
-                    className="fill-blue-600 stroke-blue-400"
+                    className="fill-indigo-700 stroke-indigo-500"
                     strokeWidth="1"
                     d="M10 24L8 26L8 28L10 26M14 24L16 26L16 28L14 26"
                   />
@@ -107,40 +175,40 @@ const Header = () => {
                     cx="12"
                     cy="20"
                     r="1.5"
-                    className="fill-white/90 stroke-blue-400"
+                    className="fill-white/80 stroke-indigo-500"
                     strokeWidth="0.5"
                   />
                   {/* Engine flames */}
                   <g className="animate-pulse">
                     <path
-                      className="fill-orange-500/80"
+                      className="fill-orange-600/70"
                       d="M11 29L12 32L13 29L12 28.5L11 29"
                     />
                     <path
-                      className="fill-yellow-500/80"
+                      className="fill-yellow-500/70"
                       d="M11.5 29L12 31L12.5 29L12 28.75L11.5 29"
                     />
                   </g>
                   {/* Stars */}
                   <g className="animate-twinkle">
-                    <circle cx="6" cy="16" r="0.3" className="fill-white" />
-                    <circle cx="18" cy="18" r="0.3" className="fill-white" />
-                    <circle cx="16" cy="14" r="0.3" className="fill-white" />
-                    <circle cx="8" cy="22" r="0.3" className="fill-white" />
+                    <circle cx="6" cy="16" r="0.3" className="fill-white/40" />
+                    <circle cx="18" cy="18" r="0.3" className="fill-white/40" />
+                    <circle cx="16" cy="14" r="0.3" className="fill-white/40" />
+                    <circle cx="8" cy="22" r="0.3" className="fill-white/40" />
                   </g>
                 </svg>
               </div>
               <div className="flex flex-col gap-0">
                 <div className="group relative h-6 w-[180px]">
-                  <div className="absolute left-0 top-0 text-lg font-bold text-white">
+                  <div className="absolute left-0 top-0 text-lg font-bold text-white/80">
                     <span className="block group-hover:hidden">AI</span>
-                    <div className="group-hover:animate-typing invisible absolute left-0 top-0 w-0 overflow-hidden whitespace-nowrap border-r-2 border-blue-500 group-hover:visible">
+                    <div className="group-hover:animate-typing invisible absolute left-0 top-0 w-0 overflow-hidden whitespace-nowrap border-r-2 border-indigo-600 group-hover:visible">
                       ATOMIC IMPACT
                     </div>
                   </div>
                 </div>
                 <div className="h-4 w-[180px]">
-                  <span className="text-xs font-medium text-gray-300">
+                  <span className="text-xs font-medium text-gray-500">
                     ENGINEERING
                   </span>
                 </div>
@@ -157,8 +225,8 @@ const Header = () => {
                     href={item.href}
                     className={`text-sm font-medium transition-colors ${
                       pathUrl === item.href
-                        ? "text-blue-500"
-                        : "text-gray-300 hover:text-white"
+                        ? "text-indigo-400"
+                        : "text-gray-400 hover:text-white"
                     }`}
                   >
                     {item.name}

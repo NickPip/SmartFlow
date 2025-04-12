@@ -114,7 +114,7 @@ const NewHero = () => {
                   type: "spring",
                   stiffness: 50,
                 }}
-                className="text-6xl font-bold text-white md:text-8xl"
+                className="text-5xl font-bold tracking-tighter text-white [text-shadow:_0_1px_20px_rgb(59_130_246_/_0.3)] md:text-7xl"
               >
                 {slides[currentSlide].title}
               </motion.h1>
@@ -128,7 +128,7 @@ const NewHero = () => {
                   type: "spring",
                   stiffness: 50,
                 }}
-                className="mx-auto mt-6 max-w-2xl text-lg text-gray-300"
+                className="mx-auto mt-6 max-w-2xl text-base font-medium tracking-wider text-blue-200/90 md:text-lg"
               >
                 {slides[currentSlide].description}
               </motion.p>
