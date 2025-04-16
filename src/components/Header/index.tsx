@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useModal } from "@/context/ModalContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
   const pathUrl = usePathname();
@@ -126,14 +127,14 @@ const Header = () => {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-12 items-center">
+        <div className="flex h-12 items-center justify-between">
           {/* Logo */}
-          <div className="flex w-1/3 flex-shrink-0 items-center">
+          <div className="flex flex-shrink-0 items-center">
             <Link href="/" className="flex items-center gap-3">
               <div className="relative">
                 <svg
                   viewBox="0 0 24 32"
-                  className="animate-hover h-12 w-12"
+                  className="h-12 w-12 animate-hover"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -182,7 +183,7 @@ const Header = () => {
                 <div className="group relative h-6 w-[180px]">
                   <div className="absolute left-0 top-0 text-lg font-bold text-white/80">
                     <span className="block group-hover:hidden">AI</span>
-                    <div className="group-hover:animate-typing invisible absolute left-0 top-0 w-0 overflow-hidden whitespace-nowrap border-r-2 border-indigo-600 group-hover:visible">
+                    <div className="invisible absolute left-0 top-0 w-0 overflow-hidden whitespace-nowrap border-r-2 border-indigo-600 group-hover:visible group-hover:animate-typing">
                       ATOMIC IMPACT
                     </div>
                   </div>
@@ -197,7 +198,7 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden w-1/3 md:block">
+          <nav className="hidden md:block">
             <ul className="flex justify-center space-x-12">
               {menuItems.map((item) => (
                 <li key={item.name}>
@@ -216,14 +217,8 @@ const Header = () => {
             </ul>
           </nav>
 
-          {/* Get Started and Work with us buttons */}
-          <div className="hidden w-1/3 justify-end gap-4 md:flex">
-            <Link
-              href="/work-with-us"
-              className="rounded-lg border border-gray-700 px-4 py-2 text-sm font-medium text-gray-300 transition-colors hover:border-gray-600 hover:text-white"
-            >
-              Work with us
-            </Link>
+          {/* Get Started button */}
+          <div className="hidden md:flex">
             <button
               type="button"
               onClick={openContactModal}
@@ -234,76 +229,103 @@ const Header = () => {
           </div>
 
           {/* Mobile menu button */}
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-slate-800/50 md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
+          <div className="flex items-center md:hidden">
+            <button
+              type="button"
+              className="z-[60] inline-flex items-center justify-center rounded-md p-2 text-white transition-colors duration-200 hover:bg-slate-800/50"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              )}
-            </svg>
-          </button>
+              <span className="sr-only">Open main menu</span>
+              <motion.div
+                initial={false}
+                animate={isMenuOpen ? "open" : "closed"}
+              >
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                >
+                  <motion.path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    variants={{
+                      open: {
+                        d: "M6 18L18 6M6 6l12 12",
+                        transition: { duration: 0.3 },
+                      },
+                      closed: {
+                        d: "M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5",
+                        transition: { duration: 0.3 },
+                      },
+                    }}
+                  />
+                </svg>
+              </motion.div>
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
-      <div
-        className={`${
-          isMenuOpen ? "block" : "hidden"
-        } absolute w-full bg-[#0a0f2c] pb-3 pt-2 md:hidden`}
-      >
-        <div className="space-y-1 px-4">
-          {menuItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`block rounded-md px-3 py-2 text-base font-medium ${
-                pathUrl === item.href
-                  ? "bg-slate-800 text-white"
-                  : "text-gray-300 hover:bg-slate-800 hover:text-white"
-              }`}
-              onClick={() => setIsMenuOpen(false)}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="absolute z-50 w-full overflow-hidden bg-[#030408]/95 backdrop-blur-md md:hidden"
+          >
+            <motion.div
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.2 }}
+              className="space-y-1 px-4 py-3"
             >
-              {item.name}
-            </Link>
-          ))}
-          <Link
-            href="/work-with-us"
-            className="mt-4 block w-full rounded-lg border border-gray-700 px-3 py-2 text-center text-base font-medium text-gray-300"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Work with us
-          </Link>
-          <button
-            onClick={() => {
-              openContactModal();
-              setIsMenuOpen(false);
-            }}
-            className="mt-2 block w-full rounded-lg bg-teal-400 px-3 py-2 text-center text-base font-medium text-gray-900"
-          >
-            Get started
-          </button>
-        </div>
-      </div>
+              {menuItems.map((item, index) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.1 * (index + 1), duration: 0.2 }}
+                >
+                  <Link
+                    href={item.href}
+                    className={`block rounded-md px-3 py-2 text-base font-medium ${
+                      pathUrl === item.href
+                        ? "bg-gray-800/50 text-white"
+                        : "text-gray-300 hover:bg-gray-800/30 hover:text-white"
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{
+                  delay: 0.1 * (menuItems.length + 1),
+                  duration: 0.2,
+                }}
+              >
+                <button
+                  onClick={() => {
+                    openContactModal();
+                    setIsMenuOpen(false);
+                  }}
+                  className="mt-4 block w-full rounded-lg bg-teal-400 px-4 py-2.5 text-center text-base font-medium text-gray-900 transition-colors hover:bg-teal-300"
+                >
+                  Get started
+                </button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

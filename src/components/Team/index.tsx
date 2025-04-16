@@ -1,66 +1,103 @@
-import { TeamType } from "@/types/team";
-import SectionTitle from "../Common/SectionTitle";
-import SingleTeam from "./SingleTeam";
+"use client";
 
-const teamData: TeamType[] = [
+import { motion } from "framer-motion";
+import Image from "next/image";
+
+const teamMembers = [
   {
-    id: 1,
-    name: "Adveen Desuza",
-    designation: "UI Designer",
-    image: "/images/team/team-01.png",
-    facebookLink: "/#",
-    twitterLink: "/#",
-    instagramLink: "/#",
+    name: "Nikoloz",
+    role: "Founder & CEO",
+    description:
+      "Visionary leader with expertise in AI and software development. Building the future of technology.",
+    image: "/images/team/nikoloz.png",
+    bgColor: "bg-emerald-600",
   },
   {
-    id: 2,
-    name: "Jezmin uniya",
-    designation: "Product Designer",
-    image: "/images/team/team-02.png",
-    facebookLink: "/#",
-    twitterLink: "/#",
-    instagramLink: "/#",
+    name: "Eduard",
+    role: "Lead Developer",
+    description:
+      "Expert developer with deep knowledge in modern web technologies and system architecture. Creating robust and scalable solutions.",
+    image: "/images/team/ed.png",
+    bgColor: "bg-blue-600",
   },
   {
-    id: 3,
-    name: "Andrieo Gloree",
-    designation: "App Developer",
-    image: "/images/team/team-03.png",
-    facebookLink: "/#",
-    twitterLink: "/#",
-    instagramLink: "/#",
-  },
-  {
-    id: 4,
-    name: "Jackie Sanders",
-    designation: "Content Writer",
-    image: "/images/team/team-04.png",
-    facebookLink: "/#",
-    twitterLink: "/#",
-    instagramLink: "/#",
+    name: "Irakli",
+    role: "Senior Developer",
+    description:
+      "Experienced full-stack developer specializing in modern web technologies and innovative solutions. Driving technical excellence in every project.",
+    image: "/images/team/irakli.png",
+    bgColor: "bg-purple-600",
   },
 ];
 
 const Team = () => {
   return (
-    <section
-      id="team"
-      className="overflow-hidden bg-gray-1 pb-12 pt-20 dark:bg-dark-2 lg:pb-[90px] lg:pt-[120px]"
-    >
-      <div className="container">
-        <div className="mb-[60px]">
-          <SectionTitle
-            subtitle="Our Team"
-            title="Meet Our Team"
-            paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
-            width="640px"
-            center
-          />
+    <section className="relative overflow-hidden bg-black py-24">
+      <div className="container relative mx-auto px-4">
+        {/* Section Header */}
+        <div className="mx-auto max-w-3xl text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-4 text-3xl font-bold text-white sm:text-4xl md:text-[40px]"
+          >
+            Meet Our Team
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-lg text-gray-400"
+          >
+            Passionate experts bringing innovation to life
+          </motion.p>
         </div>
 
-        <div className="-mx-4 flex flex-wrap justify-center">
-          {teamData.map((team, i) => (
-            <SingleTeam key={i} team={team} />
+        {/* Team Grid */}
+        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {teamMembers.map((member, index) => (
+            <motion.div
+              key={member.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group relative"
+            >
+              {/* Card Container */}
+              <div
+                className={`relative aspect-square overflow-hidden rounded-full ${member.bgColor} transition-all duration-500`}
+              >
+                {member.image ? (
+                  // Image Container with Pixel Art Preservation
+                  <div className="relative h-full w-full">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-contain transition-all duration-500 group-hover:scale-110"
+                      style={{ imageRendering: "pixelated" }}
+                    />
+                  </div>
+                ) : null}
+
+                {/* Content Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-500 group-hover:bg-black/80 group-hover:opacity-100">
+                  <div className="transform px-6 text-center transition-all duration-500">
+                    <h3 className="text-xl font-bold text-white">
+                      {member.name}
+                    </h3>
+                    <p className="text-sm text-emerald-400">{member.role}</p>
+                    <p className="mt-2 text-sm text-gray-300">
+                      {member.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>

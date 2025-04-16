@@ -10,18 +10,19 @@ const NewHero = () => {
       image: "/images/hero/hero2.png",
       title: "Accelerate your workflow",
       description:
-        "Build, test, and deploy faster with our integrated platform.",
+        "Streamline your development process with our comprehensive platform. From rapid prototyping to production deployment, we provide the tools and infrastructure you need to build faster, test smarter, and deploy with confidence.",
     },
     {
       image: "/images/hero/hero3.png",
       title: "Innovative Solutions",
       description:
-        "Transform your ideas into reality with cutting-edge technology.",
+        "Leverage cutting-edge technology to transform your ideas into reality. Our platform combines powerful features with intuitive design, enabling you to create sophisticated applications that drive business growth and innovation.",
     },
     {
       image: "/images/hero/hero4.png",
       title: "Future of Development",
-      description: "Experience the next generation of software development.",
+      description:
+        "Experience the next generation of software development with our advanced platform. Built for modern teams, our solution integrates seamlessly with your workflow, offering unparalleled performance, security, and scalability.",
     },
   ];
 
@@ -74,7 +75,7 @@ const NewHero = () => {
         <div className="absolute inset-0 z-10">
           {/* Moving hexagonal grid */}
           <div
-            className="animate-slide-slow absolute inset-0"
+            className="absolute inset-0 animate-slide-slow"
             style={{
               backgroundImage: `
                 linear-gradient(to right bottom, rgba(0,102,255,0.1) 1px, transparent 1px),
@@ -84,7 +85,7 @@ const NewHero = () => {
             }}
           />
           <div
-            className="animate-slide-slower absolute inset-0"
+            className="absolute inset-0 animate-slide-slower"
             style={{
               backgroundImage: `
                 linear-gradient(to right bottom, rgba(0,102,255,0.05) 1px, transparent 1px),
@@ -94,8 +95,8 @@ const NewHero = () => {
             }}
           />
           {/* Glowing orbs */}
-          <div className="animate-pulse-slow absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-blue-500/20 blur-[120px]" />
-          <div className="animate-pulse-slow absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-blue-300/20 blur-[120px]" />
+          <div className="absolute left-1/4 top-1/4 h-96 w-96 animate-pulse-slow rounded-full bg-blue-500/20 blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/4 h-96 w-96 animate-pulse-slow rounded-full bg-blue-300/20 blur-[120px]" />
           {/* Overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#000814]/50 to-[#000814]" />
         </div>
@@ -128,7 +129,7 @@ const NewHero = () => {
                   type: "spring",
                   stiffness: 50,
                 }}
-                className="mx-auto mt-6 max-w-2xl text-base font-medium tracking-wider text-blue-200/90 md:text-lg"
+                className="mx-auto mt-6 max-w-4xl text-base font-medium tracking-wider text-blue-200/90 md:text-lg"
               >
                 {slides[currentSlide].description}
               </motion.p>

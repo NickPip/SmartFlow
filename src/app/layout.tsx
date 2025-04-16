@@ -1,6 +1,6 @@
 "use client";
 
-import { JetBrains_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
@@ -15,10 +15,10 @@ import ToasterContext from "@/components/Common/ToasterContext";
 import ContactModal from "@/components/ContactModal";
 import { ModalProvider } from "@/context/ModalContext";
 
-const jetbrainsMono = JetBrains_Mono({
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-jetbrains",
+  variable: "--font-inter",
 });
 
 export default function RootLayout({
@@ -40,7 +40,7 @@ export default function RootLayout({
       */}
       <head />
 
-      <body className={jetbrainsMono.className}>
+      <body className={inter.className}>
         <SessionProvider>
           <ThemeProvider
             attribute="class"
