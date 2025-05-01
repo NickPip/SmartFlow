@@ -36,15 +36,21 @@ const Header = () => {
   const handleScrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 80; // Height of the fixed header
-      const offsetPosition = element.offsetTop - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-      setActiveSection(sectionId);
+      // First close the menu
       setIsMenuOpen(false);
+
+      // Small delay to allow menu close animation
+      setTimeout(() => {
+        const offset = 80; // Height of the fixed header
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = window.scrollY + elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+        setActiveSection(sectionId);
+      }, 300); // Delay matches the menu close animation duration
     }
   };
 
@@ -52,7 +58,7 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = menuItems.map((item) => item.section);
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 100; // Add offset for better detection
 
       sections.forEach((section) => {
         const element = document.getElementById(section);
@@ -69,7 +75,7 @@ const Header = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [menuItems]);
 
   return (
     <header
@@ -335,7 +341,7 @@ const Header = () => {
                 >
                   <button
                     onClick={() => handleScrollToSection(item.section)}
-                    className={`block w-full rounded-md px-3 py-2 text-left text-base font-medium ${
+                    className={`block w-full cursor-pointer rounded-md px-3 py-2 text-left text-base font-medium transition-colors ${
                       activeSection === item.section
                         ? "bg-gray-800/50 text-white"
                         : "text-gray-300 hover:bg-gray-800/30 hover:text-white"
