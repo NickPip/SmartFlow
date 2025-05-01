@@ -9,9 +9,11 @@ import Team from "@/components/Team";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Play Next.js - SaaS Starter Kit and Boilerplate for Next.js",
+  title: "AI Engineering - Building Digital Excellence",
   description:
-    "Free Next.js SaaS Boilerplate and Starter Kit designed and built for SaaS startups. It comes with all necessary integrations, pages, and components you need to launch a feature-rich SaaS websites.",
+    "AI Engineering - Transforming complex challenges into elegant solutions. We specialize in developing cutting-edge solutions using the latest technologies.",
+  keywords:
+    "AI Engineering, Software Development, Digital Solutions, Web Development, Mobile Apps, Cloud Services",
 };
 
 export default function Home() {

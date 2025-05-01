@@ -34,12 +34,15 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
-      <head />
-
+      <head>
+        <title>AI Engineering - Building Digital Excellence</title>
+        <meta
+          name="description"
+          content="AI Engineering - Transforming complex challenges into elegant solutions. We specialize in developing cutting-edge solutions using the latest technologies."
+        />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+      </head>
       <body className={inter.className}>
         <SessionProvider>
           <ThemeProvider
