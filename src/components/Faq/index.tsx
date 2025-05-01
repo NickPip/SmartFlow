@@ -3,7 +3,10 @@ import SingleFaq from "./SingleFaq";
 
 const Faq = () => {
   return (
-    <section className="relative z-20 overflow-hidden bg-[#0B1120] pb-8 pt-20 lg:pb-[50px] lg:pt-[120px]">
+    <section
+      id="faq"
+      className="relative z-20 overflow-hidden bg-[#0B1120] pb-8 pt-20 lg:pb-[50px] lg:pt-[120px]"
+    >
       {/* Gradient Effects */}
       <div className="absolute left-0 top-0 -z-0 h-full w-full">
         <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-gradient-to-r from-primary/5 to-purple-500/5 blur-3xl"></div>

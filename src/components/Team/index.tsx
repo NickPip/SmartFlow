@@ -24,7 +24,7 @@ const teamMembers = [
 
 const Team = () => {
   return (
-    <section className="relative overflow-hidden bg-black py-24">
+    <section id="portfolio" className="relative overflow-hidden bg-black py-24">
       <div className="container relative mx-auto px-4">
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center">

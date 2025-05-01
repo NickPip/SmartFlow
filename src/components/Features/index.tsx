@@ -4,7 +4,10 @@ import featuresData from "./featuresData";
 
 const Features = () => {
   return (
-    <section className="relative overflow-hidden bg-black py-20 lg:py-[120px]">
+    <section
+      id="features"
+      className="relative overflow-hidden bg-black py-20 lg:py-[120px]"
+    >
       <div className="container relative z-10">
         <div className="-mx-4 flex flex-wrap">
           <div

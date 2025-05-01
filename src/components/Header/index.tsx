@@ -10,6 +10,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
   const { openContactModal } = useModal();
+  const [activeSection, setActiveSection] = useState("");
 
   // Sticky Navbar
   const handleStickyNavbar = () => {
@@ -26,10 +27,49 @@ const Header = () => {
   }, []);
 
   const menuItems = [
-    { name: "About", href: "/about" },
-    { name: "Portfolio", href: "/portfolio" },
-    { name: "Contact", href: "/contact" },
+    { name: "Team", section: "portfolio" },
+    { name: "Features", section: "features" },
+    { name: "FAQ", section: "faq" },
+    { name: "Contact", section: "contact" },
   ];
+
+  const handleScrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80; // Height of the fixed header
+      const offsetPosition = element.offsetTop - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+      setActiveSection(sectionId);
+      setIsMenuOpen(false);
+    }
+  };
+
+  // Update active section based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = menuItems.map((item) => item.section);
+      const scrollPosition = window.scrollY + 100;
+
+      sections.forEach((section) => {
+        const element = document.getElementById(section);
+        if (element) {
+          const top = element.offsetTop - 100;
+          const height = element.offsetHeight;
+
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(section);
+          }
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header
@@ -38,11 +78,11 @@ const Header = () => {
       }`}
     >
       {/* Cosmic background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="from-purple-900/3 absolute inset-0 bg-gradient-to-b to-transparent"></div>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="from-purple-900/3 pointer-events-none absolute inset-0 bg-gradient-to-b to-transparent"></div>
         {/* Stars */}
         <div
-          className="absolute h-[2px] w-[2px] animate-pulse bg-white/30"
+          className="pointer-events-none absolute h-[2px] w-[2px] animate-pulse bg-white/30"
           style={{ left: "15%", top: "30%" }}
         ></div>
         <div
@@ -117,7 +157,7 @@ const Header = () => {
         ></div>
         {/* Additional cosmic dust */}
         <div
-          className="absolute left-0 top-0 h-full w-full opacity-20"
+          className="pointer-events-none absolute left-0 top-0 h-full w-full opacity-20"
           style={{
             backgroundImage: `radial-gradient(circle at 50% 50%, rgba(20, 20, 35, 0.15) 0%, transparent 50%),
                              radial-gradient(circle at 20% 30%, rgba(25, 25, 45, 0.1) 0%, transparent 40%),
@@ -129,7 +169,7 @@ const Header = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-12 items-center justify-between">
           {/* Logo */}
-          <div className="flex flex-shrink-0 items-center">
+          <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-3">
               <div className="relative">
                 <svg
@@ -198,38 +238,40 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden md:block">
-            <ul className="flex justify-center space-x-12">
-              {menuItems.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className={`text-sm font-medium transition-colors ${
-                      pathUrl === item.href
-                        ? "text-white"
-                        : "text-gray-300 hover:text-white"
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="-ml-40 hidden flex-1 justify-center md:flex">
+            <nav>
+              <ul className="flex items-center space-x-12">
+                {menuItems.map((item) => (
+                  <li key={item.name}>
+                    <button
+                      onClick={() => handleScrollToSection(item.section)}
+                      className={`cursor-pointer text-sm font-medium transition-colors ${
+                        activeSection === item.section
+                          ? "text-white"
+                          : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      {item.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
 
           {/* Get Started button */}
-          <div className="hidden md:flex">
+          <div className="hidden flex-shrink-0 md:block">
             <button
               type="button"
-              onClick={openContactModal}
-              className="z-[60] rounded-lg bg-teal-400 px-6 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-teal-300"
+              onClick={() => openContactModal()}
+              className="z-[60] cursor-pointer rounded-lg bg-teal-400 px-6 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-teal-300"
             >
               Get started
             </button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex items-center md:hidden">
+          <div className="flex md:hidden">
             <button
               type="button"
               className="z-[60] inline-flex items-center justify-center rounded-md p-2 text-white transition-colors duration-200 hover:bg-slate-800/50"
@@ -291,17 +333,16 @@ const Header = () => {
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1 * (index + 1), duration: 0.2 }}
                 >
-                  <Link
-                    href={item.href}
-                    className={`block rounded-md px-3 py-2 text-base font-medium ${
-                      pathUrl === item.href
+                  <button
+                    onClick={() => handleScrollToSection(item.section)}
+                    className={`block w-full rounded-md px-3 py-2 text-left text-base font-medium ${
+                      activeSection === item.section
                         ? "bg-gray-800/50 text-white"
                         : "text-gray-300 hover:bg-gray-800/30 hover:text-white"
                     }`}
-                    onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
-                  </Link>
+                  </button>
                 </motion.div>
               ))}
               <motion.div
@@ -317,7 +358,7 @@ const Header = () => {
                     openContactModal();
                     setIsMenuOpen(false);
                   }}
-                  className="mt-4 block w-full rounded-lg bg-teal-400 px-4 py-2.5 text-center text-base font-medium text-gray-900 transition-colors hover:bg-teal-300"
+                  className="mt-4 block w-full cursor-pointer rounded-lg bg-teal-400 px-4 py-2.5 text-center text-base font-medium text-gray-900 transition-colors hover:bg-teal-300"
                 >
                   Get started
                 </button>

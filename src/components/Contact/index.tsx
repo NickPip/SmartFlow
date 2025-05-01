@@ -1,23 +1,26 @@
 const Contact = () => {
   return (
-    <section className="relative z-20 overflow-hidden bg-[#0B1120] py-20 lg:py-[120px]">
-      {/* Gradient Effects */}
+    <section
+      id="contact"
+      className="relative z-20 overflow-hidden bg-[#0B1120] py-20 lg:py-[120px]"
+    >
+      {/* Gradient Effects with Animation */}
       <div className="absolute left-0 top-0 -z-0 h-full w-full">
-        <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-gradient-to-r from-primary/5 to-purple-500/5 blur-3xl"></div>
-        <div className="absolute right-0 top-0 h-[600px] w-[600px] rounded-full bg-gradient-to-l from-primary/5 to-purple-500/5 blur-3xl"></div>
+        <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 transform animate-[pulse_8s_ease-in-out_infinite] rounded-full bg-gradient-to-r from-primary/5 to-purple-500/5 blur-3xl"></div>
+        <div className="absolute right-0 top-0 h-[600px] w-[600px] animate-[pulse_6s_ease-in-out_infinite] rounded-full bg-gradient-to-l from-primary/5 to-purple-500/5 blur-3xl"></div>
       </div>
 
       <div className="container relative z-10 px-4">
         <div className="-mx-4 flex flex-wrap items-center">
           <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
             <div className="mb-12 lg:mb-0">
-              <span className="mb-4 block text-lg font-semibold text-[#4B6BFB]">
+              <span className="animate-fade-in-up mb-4 block text-lg font-semibold text-[#4B6BFB]">
                 Let's Connect
               </span>
-              <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl md:text-[40px] md:leading-tight">
+              <h2 className="animate-fade-in-up mb-6 text-3xl font-bold text-white [animation-delay:200ms] sm:text-4xl md:text-[40px] md:leading-tight">
                 Ready to Transform Your Ideas into Reality?
               </h2>
-              <p className="mb-12 text-lg leading-relaxed text-gray-400">
+              <p className="animate-fade-in-up mb-12 text-lg leading-relaxed text-gray-400 [animation-delay:400ms]">
                 We specialize in developing cutting-edge solutions using the
                 latest technologies. Whether you need a custom software
                 solution, web application, or technical consultation, we're here
@@ -25,8 +28,8 @@ const Contact = () => {
               </p>
 
               <div className="mb-12 flex flex-col space-y-8 lg:mb-0">
-                <div className="flex items-center">
-                  <div className="mr-6 flex h-[60px] w-[60px] items-center justify-center rounded-2xl bg-[#4B6BFB]/10">
+                <div className="animate-fade-in-left flex items-center [animation-delay:600ms]">
+                  <div className="mr-6 flex h-[60px] w-[60px] items-center justify-center rounded-2xl bg-[#4B6BFB]/10 transition-transform hover:scale-110">
                     <svg
                       className="h-8 w-8 text-[#4B6BFB]"
                       fill="none"
@@ -55,8 +58,8 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center">
-                  <div className="mr-6 flex h-[60px] w-[60px] items-center justify-center rounded-2xl bg-[#4B6BFB]/10">
+                <div className="animate-fade-in-left flex items-center [animation-delay:800ms]">
+                  <div className="mr-6 flex h-[60px] w-[60px] items-center justify-center rounded-2xl bg-[#4B6BFB]/10 transition-transform hover:scale-110">
                     <svg
                       className="h-8 w-8 text-[#4B6BFB]"
                       fill="none"
@@ -76,7 +79,7 @@ const Contact = () => {
                       Technical Support
                     </h3>
                     <p className="text-base text-gray-400">
-                      atomicimpacteng@gmail.com
+                      support@company.dev
                     </p>
                   </div>
                 </div>
@@ -85,7 +88,7 @@ const Contact = () => {
           </div>
 
           <div className="w-full px-4 lg:w-5/12 xl:w-4/12">
-            <div className="rounded-xl bg-white/5 p-8 backdrop-blur-sm sm:p-10">
+            <div className="animate-fade-in-up rounded-xl bg-white/5 p-8 backdrop-blur-sm transition-colors duration-300 [animation-delay:400ms] hover:bg-white/10 sm:p-10">
               <h3 className="mb-8 text-2xl font-bold text-white">
                 Start Your Project
               </h3>
@@ -97,7 +100,7 @@ const Contact = () => {
                   <input
                     type="text"
                     placeholder="John Doe"
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white placeholder:text-gray-500 focus:border-[#4B6BFB] focus:outline-none"
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white transition-all duration-300 placeholder:text-gray-500 hover:border-white/20 focus:border-[#4B6BFB] focus:outline-none"
                   />
                 </div>
                 <div className="mb-6">
@@ -107,14 +110,14 @@ const Contact = () => {
                   <input
                     type="email"
                     placeholder="you@company.com"
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white placeholder:text-gray-500 focus:border-[#4B6BFB] focus:outline-none"
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white transition-all duration-300 placeholder:text-gray-500 hover:border-white/20 focus:border-[#4B6BFB] focus:outline-none"
                   />
                 </div>
                 <div className="mb-6">
                   <label className="mb-3 block text-sm font-medium text-gray-300">
                     Project Type*
                   </label>
-                  <select className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white focus:border-[#4B6BFB] focus:outline-none">
+                  <select className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white transition-all duration-300 hover:border-white/20 focus:border-[#4B6BFB] focus:outline-none">
                     <option value="" className="bg-[#0B1120] text-gray-500">
                       Select project type
                     </option>
@@ -139,12 +142,12 @@ const Contact = () => {
                   <textarea
                     rows={4}
                     placeholder="Tell us about your project requirements..."
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white placeholder:text-gray-500 focus:border-[#4B6BFB] focus:outline-none"
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white transition-all duration-300 placeholder:text-gray-500 hover:border-white/20 focus:border-[#4B6BFB] focus:outline-none"
                   ></textarea>
                 </div>
                 <button
                   type="submit"
-                  className="w-full rounded-lg bg-[#4B6BFB] px-6 py-3 text-base font-semibold text-white transition duration-300 ease-in-out hover:bg-[#4B6BFB]/90"
+                  className="w-full rounded-lg bg-[#4B6BFB] px-6 py-3 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-[#4B6BFB]/90 active:scale-[0.98]"
                 >
                   Send Message
                 </button>

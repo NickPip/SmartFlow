@@ -5,13 +5,13 @@ const Footer = () => {
     <footer className="relative z-10 bg-[#0B1120] py-8">
       {/* Gradient Effect */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-gradient-to-r from-primary/5 to-purple-500/5 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 h-[400px] w-[400px] animate-[pulse_10s_ease-in-out_infinite] rounded-full bg-gradient-to-r from-primary/5 to-purple-500/5 blur-3xl"></div>
       </div>
 
       <div className="container px-4">
         {/* Bottom Bar */}
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
-          <p className="text-sm text-gray-400">
+          <p className="animate-fade-in-up text-sm text-gray-400">
             © {new Date().getFullYear()} Play. All rights reserved.
           </p>
 
@@ -19,7 +19,7 @@ const Footer = () => {
           <div className="flex items-center space-x-6">
             <Link
               href="#"
-              className="text-gray-400 transition-colors hover:text-[#4B6BFB]"
+              className="animate-fade-in-up text-gray-400 transition-all duration-300 [animation-delay:200ms] hover:scale-110 hover:text-[#4B6BFB]"
               aria-label="GitHub"
             >
               <svg
@@ -37,7 +37,7 @@ const Footer = () => {
             </Link>
             <Link
               href="#"
-              className="text-gray-400 transition-colors hover:text-[#4B6BFB]"
+              className="animate-fade-in-up text-gray-400 transition-all duration-300 [animation-delay:400ms] hover:scale-110 hover:text-[#4B6BFB]"
               aria-label="LinkedIn"
             >
               <svg
@@ -51,7 +51,7 @@ const Footer = () => {
             </Link>
             <Link
               href="#"
-              className="text-gray-400 transition-colors hover:text-[#4B6BFB]"
+              className="animate-fade-in-up text-gray-400 transition-all duration-300 [animation-delay:600ms] hover:scale-110 hover:text-[#4B6BFB]"
               aria-label="Twitter"
             >
               <svg
