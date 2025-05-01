@@ -13,20 +13,12 @@ const teamMembers = [
     bgColor: "bg-emerald-600",
   },
   {
-    name: "Eduard",
-    role: "Lead Developer",
+    name: "Ed",
+    role: "Founder & CTO",
     description:
       "Expert developer with deep knowledge in modern web technologies and system architecture. Creating robust and scalable solutions.",
     image: "/images/team/ed.png",
     bgColor: "bg-blue-600",
-  },
-  {
-    name: "Irakli",
-    role: "Senior Developer",
-    description:
-      "Experienced full-stack developer specializing in modern web technologies and innovative solutions. Driving technical excellence in every project.",
-    image: "/images/team/irakli.png",
-    bgColor: "bg-purple-600",
   },
 ];
 
@@ -57,7 +49,7 @@ const Team = () => {
         </div>
 
         {/* Team Grid */}
-        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-8 sm:grid-cols-2">
           {teamMembers.map((member, index) => (
             <motion.div
               key={member.name}
