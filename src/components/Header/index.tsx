@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useModal } from "@/context/ModalContext";
@@ -26,12 +26,16 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleStickyNavbar);
   }, []);
 
-  const menuItems = [
-    { name: "Team", section: "portfolio" },
-    { name: "Features", section: "features" },
-    { name: "FAQ", section: "faq" },
-    { name: "Contact", section: "contact" },
-  ];
+  const menuItems = useMemo(
+    () => [
+      { label: "Home", section: "home" },
+      { label: "About", section: "about" },
+      { label: "Services", section: "services" },
+      { label: "Team", section: "team" },
+      { label: "Contact", section: "contact" },
+    ],
+    [],
+  );
 
   const handleScrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -248,7 +252,7 @@ const Header = () => {
             <nav>
               <ul className="flex items-center space-x-12">
                 {menuItems.map((item) => (
-                  <li key={item.name}>
+                  <li key={item.label}>
                     <button
                       onClick={() => handleScrollToSection(item.section)}
                       className={`cursor-pointer text-sm font-medium transition-colors ${
@@ -257,7 +261,7 @@ const Header = () => {
                           : "text-gray-300 hover:text-white"
                       }`}
                     >
-                      {item.name}
+                      {item.label}
                     </button>
                   </li>
                 ))}
@@ -334,7 +338,7 @@ const Header = () => {
             >
               {menuItems.map((item, index) => (
                 <motion.div
-                  key={item.name}
+                  key={item.label}
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1 * (index + 1), duration: 0.2 }}
@@ -347,7 +351,7 @@ const Header = () => {
                         : "text-gray-300 hover:bg-gray-800/30 hover:text-white"
                     }`}
                   >
-                    {item.name}
+                    {item.label}
                   </button>
                 </motion.div>
               ))}

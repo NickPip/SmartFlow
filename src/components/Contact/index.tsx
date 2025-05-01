@@ -15,7 +15,7 @@ const Contact = () => {
           <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
             <div className="mb-12 lg:mb-0">
               <span className="animate-fade-in-up mb-4 block text-lg font-semibold text-[#4B6BFB]">
-                Let's Connect
+                Let&apos;s Connect
               </span>
               <h2 className="animate-fade-in-up mb-6 text-3xl font-bold text-white [animation-delay:200ms] sm:text-4xl md:text-[40px] md:leading-tight">
                 Ready to Transform Your Ideas into Reality?
@@ -23,8 +23,8 @@ const Contact = () => {
               <p className="animate-fade-in-up mb-12 text-lg leading-relaxed text-gray-400 [animation-delay:400ms]">
                 We specialize in developing cutting-edge solutions using the
                 latest technologies. Whether you need a custom software
-                solution, web application, or technical consultation, we're here
-                to help.
+                solution, web application, or technical consultation, we&apos;re
+                here to help.
               </p>
 
               <div className="mb-12 flex flex-col space-y-8 lg:mb-0">

@@ -51,8 +51,8 @@ export default function ContactModal() {
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-            <Transition.Child
-              as={Fragment}
+              <Transition.Child
+                as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
                 enterFrom="translate-x-full"
                 enterTo="translate-x-0"
@@ -65,66 +65,66 @@ export default function ContactModal() {
                     <div className="px-6 sm:px-8">
                       <div className="flex items-start justify-between">
                         <div>
-                  <Dialog.Title
-                    as="h3"
+                          <Dialog.Title
+                            as="h3"
                             className="font-sans text-2xl font-bold tracking-tight text-gray-900"
-                  >
-                            Let's Build Something Great
-                  </Dialog.Title>
+                          >
+                            Let&apos;s Build Something Great
+                          </Dialog.Title>
                           <p className="mt-2 font-sans text-sm text-gray-500">
-                            Share your project details and we'll get back to you
-                            within 24 hours
+                            Share your project details and we&apos;ll get back
+                            to you within 24 hours
                           </p>
                         </div>
-                  <button
-                    onClick={closeContactModal}
+                        <button
+                          onClick={closeContactModal}
                           className="rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
-                  >
+                        >
                           <FiX className="h-5 w-5" />
-                  </button>
-                </div>
+                        </button>
+                      </div>
                     </div>
                     <div className="relative mt-8 flex-1 px-6 sm:px-8">
                       <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 gap-6">
-                  <div>
-                    <label
+                          <div>
+                            <label
                               htmlFor="fullName"
                               className="block font-sans text-sm font-medium text-gray-700"
-                    >
+                            >
                               Full Name <span className="text-red-500">*</span>
-                    </label>
+                            </label>
                             <div className="mt-2">
-                    <input
-                      type="text"
+                              <input
+                                type="text"
                                 name="fullName"
                                 id="fullName"
                                 value={formData.fullName}
-                      onChange={handleChange}
+                                onChange={handleChange}
                                 className="block w-full rounded-lg border-gray-300 px-4 py-3 font-sans text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                      required
+                                required
                                 placeholder="Your Name"
-                    />
+                              />
                             </div>
-                  </div>
+                          </div>
 
-                  <div>
-                    <label
-                      htmlFor="email"
+                          <div>
+                            <label
+                              htmlFor="email"
                               className="block font-sans text-sm font-medium text-gray-700"
-                    >
+                            >
                               Business Email{" "}
                               <span className="text-red-500">*</span>
-                    </label>
+                            </label>
                             <div className="mt-2">
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      value={formData.email}
-                      onChange={handleChange}
+                              <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                value={formData.email}
+                                onChange={handleChange}
                                 className="block w-full rounded-lg border-gray-300 px-4 py-3 font-sans text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                      required
+                                required
                                 placeholder="Company Email"
                               />
                             </div>
@@ -188,42 +188,42 @@ export default function ContactModal() {
                                 placeholder="e.g., Web Application, Mobile App, SaaS Platform"
                               />
                             </div>
-                  </div>
+                          </div>
 
-                  <div>
-                    <label
+                          <div>
+                            <label
                               htmlFor="projectDescription"
                               className="block font-sans text-sm font-medium text-gray-700"
-                    >
+                            >
                               Project Description
-                    </label>
+                            </label>
                             <div className="mt-2">
-                    <textarea
+                              <textarea
                                 name="projectDescription"
                                 id="projectDescription"
                                 value={formData.projectDescription}
-                      onChange={handleChange}
-                      rows={4}
+                                onChange={handleChange}
+                                rows={4}
                                 className="block w-full rounded-lg border-gray-300 px-4 py-3 font-sans text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 placeholder="Briefly describe your project goals, requirements, and timeline"
-                    />
+                              />
                             </div>
                           </div>
-                  </div>
+                        </div>
 
                         <div className="mt-8">
-                    <button
-                      type="submit"
+                          <button
+                            type="submit"
                             className="w-full rounded-lg bg-indigo-600 px-6 py-4 font-sans text-base font-semibold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
+                          >
                             Submit Request
-                    </button>
-                  </div>
-                </form>
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
-              </Dialog.Panel>
-            </Transition.Child>
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
           </div>
         </div>

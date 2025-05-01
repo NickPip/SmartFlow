@@ -27,12 +27,12 @@ const NewHero = () => {
   ];
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 8000);
+    }, 5000);
 
-    return () => clearInterval(timer);
-  }, []);
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-[#000814]">

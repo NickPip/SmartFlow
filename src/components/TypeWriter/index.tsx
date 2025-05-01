@@ -34,7 +34,7 @@ const TypeWriter = ({
       setDisplayText("");
       setIsTyping(false);
     }
-  }, [trigger, text]);
+  }, [trigger, text, isTyping]);
 
   return (
     <motion.span className={className}>
