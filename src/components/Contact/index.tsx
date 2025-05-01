@@ -79,7 +79,7 @@ const Contact = () => {
                       Technical Support
                     </h3>
                     <p className="text-base text-gray-400">
-                      support@company.dev
+                      atomicimpacteng@gmail.com
                     </p>
                   </div>
                 </div>
