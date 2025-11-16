@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const NewHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -46,7 +47,7 @@ const NewHero = () => {
             className="absolute inset-0"
             style={{ zIndex: index === currentSlide ? 1 : 0 }}
           >
-            {/* Background Image with Ken Burns effect */}
+            {/* Background Image with Ken Burns effect via transform */}
             <motion.div
               initial={{ scale: 1.2, x: "2%" }}
               animate={{ scale: 1.1, x: "-2%" }}
@@ -58,15 +59,16 @@ const NewHero = () => {
               }}
               className="absolute inset-0"
             >
-              <div
-                className="duration-2000 absolute inset-0 bg-cover bg-center transition-all"
-                style={{
-                  backgroundImage: `url(${slide.image})`,
-                  backgroundPosition: "center",
-                }}
-              >
-                <div className="absolute inset-0 bg-black/30" />
-              </div>
+              <Image
+                src={slide.image}
+                alt={slide.title}
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover"
+                quality={80}
+              />
+              <div className="absolute inset-0 bg-black/30" />
             </motion.div>
           </motion.div>
         ))}
