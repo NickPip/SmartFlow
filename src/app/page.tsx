@@ -1,11 +1,11 @@
 import About from "@/components/About";
 import ScrollUp from "@/components/Common/ScrollUp";
 import Contact from "@/components/Contact";
-import Faq from "@/components/Faq";
 import Features from "@/components/Features";
 import Hero from "@/components/Hero";
 import NewHero from "@/components/Hero/NewHero";
 import RecentProjects from "@/components/Projects";
+import Process from "@/components/Process";
 import Team from "@/components/Team";
 import { Metadata } from "next";
 
@@ -21,11 +21,11 @@ export default function Home() {
   return (
     <>
       <NewHero />
-      <RecentProjects />
       <Hero />
+      <RecentProjects />
+      <Process />
       <Team />
       <Features />
-      <Faq />
       <Contact />
       <ScrollUp />
     </>

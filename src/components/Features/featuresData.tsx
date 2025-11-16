@@ -140,6 +140,38 @@ const featuresData: Feature[] = [
     btn: "Discover Apps",
     btnLink: "/#",
   },
+  {
+    id: 6,
+    icon: (
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 17.25V21h3.75L18.81 8.94a1.5 1.5 0 0 0 0-2.12l-1.63-1.63a1.5 1.5 0 0 0-2.12 0L3 17.25Z"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M14.75 6.25l3 3"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    title: "UI/UX Design",
+    paragraph:
+      "Intuitive user experiences crafted to boost engagement and conversion. From product discovery  to wireframe.",
+    btn: "Explore Design",
+    btnLink: "/#",
+  },
 ];
 
 export default featuresData;

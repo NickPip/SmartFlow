@@ -32,6 +32,28 @@ export const projectsData: ProjectItem[] = [
     tags: ["Analytics Dashboard", "Automation", "Role-Based Access"],
     link: "#",
   },
+  {
+    id: 3,
+    title: "N‑Movers CRM",
+    subtitle: "Load & User Management",
+    description:
+      "Operations CRM tailored for N‑Movers: load management, dispatch workflows, user/role management, and granular permissions.",
+    status: "In Progress",
+    image: "/images/projects/n-movers.jpg",
+    tags: ["Loads", "Dispatch", "RBAC", "Workflows"],
+    link: "#",
+  },
+  {
+    id: 4,
+    title: "N‑Movers Mobile",
+    subtitle: "Real‑time Tracking App",
+    description:
+      "Cross‑platform mobile app for N‑Movers with live location tracking, job updates, and driver notifications.",
+    status: "In Progress",
+    image: "/images/projects/mobile-project.jpg",
+    tags: ["Mobile", "Tracking", "Notifications"],
+    link: "#",
+  },
 ];
 
 

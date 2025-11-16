@@ -2,6 +2,8 @@ import { ProjectCard } from "./ProjectCard";
 import { projectsData } from "./projectsData";
 
 export default function RecentProjects() {
+  const completed = projectsData.filter((p) => p.status === "Completed");
+  const inProgress = projectsData.filter((p) => p.status === "In Progress");
   return (
     <section className="bg-[#0b1220] py-16 text-white dark:bg-[#0b1220]">
       <div className="container px-4">
@@ -18,8 +20,16 @@ export default function RecentProjects() {
           </p>
         </div>
 
+        <h3 className="mb-6 text-center text-lg font-semibold text-slate-200">Completed Projects</h3>
+        <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2">
+          {completed.map((p) => (
+            <ProjectCard key={p.id} project={p} />
+          ))}
+        </div>
+
+        <h3 className="mb-6 text-center text-lg font-semibold text-slate-200">Currently in Development</h3>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {projectsData.map((p) => (
+          {inProgress.map((p) => (
             <ProjectCard key={p.id} project={p} />
           ))}
         </div>
