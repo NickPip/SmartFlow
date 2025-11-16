@@ -5,7 +5,7 @@ export default function RecentProjects() {
   const completed = projectsData.filter((p) => p.status === "Completed");
   const inProgress = projectsData.filter((p) => p.status === "In Progress");
   return (
-    <section className="bg-[#0b1220] py-16 text-white dark:bg-[#0b1220]">
+    <section id="projects" className="bg-[#0b1220] py-16 text-white dark:bg-[#0b1220]">
       <div className="container px-4">
         <div className="mb-10 text-center">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-teal-400">Portfolio</p>

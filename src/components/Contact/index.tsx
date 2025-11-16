@@ -54,7 +54,8 @@ const Contact = () => {
                     <h3 className="mb-2 text-xl font-semibold text-white">
                       Development Hub
                     </h3>
-                    <p className="text-base text-gray-400">Tbilisi, Georgia</p>
+                    <p className="text-base text-gray-400">USA, Delaware
+                    </p>
                   </div>
                 </div>
 

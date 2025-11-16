@@ -36,7 +36,7 @@ const NewHero = () => {
   }, [slides.length]);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#000814]">
+    <section id="home" className="relative h-screen w-full overflow-hidden bg-[#000814]">
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
           <motion.div

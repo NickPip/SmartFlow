@@ -20,11 +20,19 @@ const teamMembers = [
     image: "/images/team/ed.png",
     bgColor: "bg-blue-600",
   },
+  {
+    name: "Iva",
+    role: "Chief Commercial Officer (CCO)",
+    description:
+      "Driving growth through partnerships, client success, and go‑to‑market strategy across our product and services portfolio.",
+    image: "/images/team/iva.png",
+    bgColor: "bg-teal-600",
+  },
 ];
 
 const Team = () => {
   return (
-    <section id="portfolio" className="relative overflow-hidden bg-black py-24">
+    <section id="team" className="relative overflow-hidden bg-black py-24">
       <div className="container relative mx-auto px-4">
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center">
@@ -49,7 +57,7 @@ const Team = () => {
         </div>
 
         {/* Team Grid */}
-        <div className="mt-16 grid gap-8 sm:grid-cols-2">
+        <div className="mt-16 grid gap-8 sm:grid-cols-2 md:grid-cols-3">
           {teamMembers.map((member, index) => (
             <motion.div
               key={member.name}
@@ -61,7 +69,7 @@ const Team = () => {
             >
               {/* Card Container */}
               <div
-                className={`relative aspect-square overflow-hidden rounded-full ${member.bgColor} transition-all duration-500`}
+                className={`relative mx-auto h-60 w-60 overflow-hidden rounded-full sm:h-64 sm:w-64 md:h-64 md:w-64 lg:h-72 lg:w-72 ${member.bgColor} transition-all duration-500`}
               >
                 {member.image ? (
                   // Image Container with Pixel Art Preservation

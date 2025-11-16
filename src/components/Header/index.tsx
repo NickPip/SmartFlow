@@ -29,8 +29,8 @@ const Header = () => {
   const menuItems = useMemo(
     () => [
       { label: "Home", section: "home" },
-      { label: "About", section: "about" },
-      { label: "Services", section: "services" },
+      { label: "Services", section: "features" },
+      { label: "Our Work", section: "projects" },
       { label: "Team", section: "team" },
       { label: "Contact", section: "contact" },
     ],

@@ -103,7 +103,7 @@ export default function Process() {
   }, [hasStarted]);
 
   return (
-    <section className="bg-[#0b1220] py-20">
+    <section id="process" className="bg-[#0b1220] py-20">
       <div ref={containerRef} className="container px-4">
         <div className="mb-12 text-center">
           <span className="inline-block rounded-full border border-teal-500/30 bg-teal-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-teal-300">
