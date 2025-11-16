@@ -5,6 +5,7 @@ import Faq from "@/components/Faq";
 import Features from "@/components/Features";
 import Hero from "@/components/Hero";
 import NewHero from "@/components/Hero/NewHero";
+import RecentProjects from "@/components/Projects";
 import Team from "@/components/Team";
 import { Metadata } from "next";
 
@@ -20,6 +21,7 @@ export default function Home() {
   return (
     <>
       <NewHero />
+      <RecentProjects />
       <Hero />
       <Team />
       <Features />
