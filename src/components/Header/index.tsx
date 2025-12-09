@@ -11,6 +11,8 @@ const Header = () => {
   const [sticky, setSticky] = useState(false);
   const { openContactModal } = useModal();
   const [activeSection, setActiveSection] = useState("");
+  const [showTypingAnimation, setShowTypingAnimation] = useState(false);
+  const [typingComplete, setTypingComplete] = useState(false);
 
   // Sticky Navbar
   const handleStickyNavbar = () => {
@@ -24,6 +26,19 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleStickyNavbar);
     return () => window.removeEventListener("scroll", handleStickyNavbar);
+  }, []);
+
+  // Trigger typing animation on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTypingAnimation(true);
+      // After animation completes (3.5s), hide cursor border
+      const completeTimer = setTimeout(() => {
+        setTypingComplete(true);
+      }, 4000); // 3.5s animation + 0.5s buffer
+      return () => clearTimeout(completeTimer);
+    }, 500); // Small delay after page load
+    return () => clearTimeout(timer);
   }, []);
 
   const menuItems = useMemo(
@@ -264,12 +279,19 @@ const Header = () => {
                 </svg>
               </div>
               <div className="flex flex-col gap-0">
-                <div className="group relative h-6 w-[180px]">
+                <div className="relative h-6 w-[180px]">
                   <div className="absolute left-0 top-0 text-lg font-bold text-white/80">
-                    <span className="block group-hover:hidden">AI</span>
-                    <div className="invisible absolute left-0 top-0 w-0 overflow-hidden whitespace-nowrap border-r-2 border-indigo-600 group-hover:visible group-hover:animate-typing">
-                      ATOMIC IMPACT
-                    </div>
+                    {!showTypingAnimation ? (
+                      <span className="block">AI</span>
+                    ) : (
+                      <div
+                        className={`w-[180px] overflow-hidden whitespace-nowrap ${
+                          !typingComplete ? "border-r-2 border-indigo-600 animate-typing" : ""
+                        }`}
+                      >
+                        ATOMIC IMPACT
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="h-4 w-[180px]">
