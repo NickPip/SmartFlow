@@ -29,9 +29,9 @@ const Header = () => {
   const menuItems = useMemo(
     () => [
       { label: "Home", section: "home" },
-      { label: "Services", section: "features" },
-      { label: "Our Work", section: "projects" },
+      { label: "Our Work", section: "projects" },  
       { label: "Team", section: "team" },
+      { label: "What We Do", section: "features" },
       { label: "Contact", section: "contact" },
     ],
     [],
@@ -62,23 +62,57 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = menuItems.map((item) => item.section);
-      const scrollPosition = window.scrollY + 100; // Add offset for better detection
+      const scrollPosition = window.scrollY + 150; // Add offset for better detection
 
+      // Find the current section in view
+      let currentSection = "";
+      
       sections.forEach((section) => {
         const element = document.getElementById(section);
         if (element) {
-          const top = element.offsetTop - 100;
+          const top = element.offsetTop - 150;
           const height = element.offsetHeight;
+          const bottom = top + height;
 
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
+          // Check if scroll position is within this section
+          if (scrollPosition >= top && scrollPosition <= bottom) {
+            currentSection = section;
           }
         }
       });
+
+      // Handle case when at top of page (home section)
+      if (scrollPosition < 200 && !currentSection) {
+        currentSection = "home";
+      }
+
+      // Handle case when past the last section (contact should be active)
+      if (!currentSection && sections.length > 0) {
+        const lastSection = sections[sections.length - 1];
+        const lastElement = document.getElementById(lastSection);
+        if (lastElement && scrollPosition > lastElement.offsetTop - 100) {
+          currentSection = lastSection;
+        }
+      }
+
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    // Set initial active section to "home" on mount
+    setActiveSection("home");
+    
+    // Wait for page to load, then check scroll position
+    const timeoutId = setTimeout(() => {
+      handleScroll();
+    }, 100);
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [menuItems]);
 
   return (
@@ -177,9 +211,9 @@ const Header = () => {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-12 items-center justify-between">
+        <div className="relative flex h-12 items-center justify-between">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 z-10 relative">
             <Link href="/" className="flex items-center gap-3">
               <div className="relative">
                 <svg
@@ -247,38 +281,72 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="-ml-40 hidden flex-1 justify-center md:flex">
-            <nav>
+          {/* Desktop Navigation - Smooth slide from right to center */}
+          <div className="hidden md:flex absolute inset-0 items-center pointer-events-none">
+            <motion.nav
+              initial={false}
+              animate={{
+                x: sticky ? -220 : 250, // Offset left by 120px when sticky to create space for button
+              }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="pointer-events-auto"
+              style={{
+                position: "absolute",
+                left: "50%",
+                transform: "translateX(-50%)",
+              }}
+            >
               <ul className="flex items-center space-x-12">
                 {menuItems.map((item) => (
                   <li key={item.label}>
                     <button
                       onClick={() => handleScrollToSection(item.section)}
-                      className={`cursor-pointer text-sm font-medium transition-colors ${
+                      className={`group relative cursor-pointer text-sm font-medium transition-all duration-300 ${
                         activeSection === item.section
                           ? "text-white"
                           : "text-gray-300 hover:text-white"
                       }`}
                     >
                       {item.label}
+                      {/* Underline for active section */}
+                      <span
+                        className={`absolute bottom-0 left-0 h-0.5 bg-teal-400 transition-all duration-300 ${
+                          activeSection === item.section
+                            ? "w-full opacity-100"
+                            : "w-0 opacity-0"
+                        }`}
+                      />
+                      {/* Hover underline effect for non-active items */}
+                      {activeSection !== item.section && (
+                        <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-white/60 transition-all duration-300 group-hover:w-full group-hover:opacity-100" />
+                      )}
                     </button>
                   </li>
                 ))}
               </ul>
-            </nav>
+            </motion.nav>
           </div>
 
-          {/* Get Started button */}
-          <div className="hidden flex-shrink-0 md:block">
+          {/* Get Started button - Smooth slide from right */}
+          <motion.div
+            initial={false}
+            animate={{
+              opacity: sticky ? 1 : 0,
+              x: sticky ? 0 : 100,
+            }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className={`hidden flex-shrink-0 md:block z-10 relative ${
+              sticky ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+          >
             <button
               type="button"
               onClick={() => openContactModal()}
-              className="z-[60] cursor-pointer rounded-lg bg-teal-400 px-6 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-teal-300"
+              className="z-[60] cursor-pointer rounded-lg bg-teal-400 px-6 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-teal-300 whitespace-nowrap"
             >
               Get started
             </button>
-          </div>
+          </motion.div>
 
           {/* Mobile menu button */}
           <div className="flex md:hidden">
@@ -345,13 +413,21 @@ const Header = () => {
                 >
                   <button
                     onClick={() => handleScrollToSection(item.section)}
-                    className={`block w-full cursor-pointer rounded-md px-3 py-2 text-left text-base font-medium transition-colors ${
+                    className={`relative block w-full cursor-pointer rounded-md px-3 py-2 text-left text-base font-medium transition-all duration-300 ${
                       activeSection === item.section
                         ? "bg-gray-800/50 text-white"
                         : "text-gray-300 hover:bg-gray-800/30 hover:text-white"
                     }`}
                   >
                     {item.label}
+                    {/* Underline for active section in mobile */}
+                    <span
+                      className={`absolute bottom-0 left-3 right-3 h-0.5 bg-teal-400 transition-all duration-300 ${
+                        activeSection === item.section
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                    />
                   </button>
                 </motion.div>
               ))}

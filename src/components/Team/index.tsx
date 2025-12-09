@@ -22,9 +22,9 @@ const teamMembers = [
   },
   {
     name: "Iva",
-    role: "Chief Commercial Officer (CCO)",
+    role: "Founder & CCO",
     description:
-      "Driving growth through partnerships, client success, and go‑to‑market strategy across our product and services portfolio.",
+      "Senior Product Officer with 5+ years leading product strategy, brand management, and building partnerships with global manufacturing companies worldwide.",
     image: "/images/team/iva.png",
     bgColor: "bg-teal-600",
   },

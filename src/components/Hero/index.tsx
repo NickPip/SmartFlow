@@ -143,19 +143,28 @@ const Hero = () => {
 
   // Calculate grid size based on viewport and cube size
   const CUBE_SIZE = 32; // 2rem = 32px
-  const GRID_COLS = Math.ceil(dimensions.width / CUBE_SIZE);
-  const GRID_ROWS = Math.ceil(dimensions.height / CUBE_SIZE);
+  const GRID_COLS = Math.ceil(dimensions.width / CUBE_SIZE) || 1;
+  const GRID_ROWS = Math.ceil(dimensions.height / CUBE_SIZE) || 1;
   const totalCubes = GRID_COLS * GRID_ROWS;
   const BOMB_PERCENTAGE = 0.15; // 15% of cells will be bombs
-  const BOMB_COUNT = Math.floor(totalCubes * BOMB_PERCENTAGE);
 
-  // Generate bombs
-  const [bombs] = useState(() => {
+  // Generate bombs function
+  const generateBombs = () => {
+    if (totalCubes === 0) return new Set<number>();
     const bombSet = new Set<number>();
-    while (bombSet.size < BOMB_COUNT) {
+    const count = Math.floor(totalCubes * BOMB_PERCENTAGE);
+    while (bombSet.size < count) {
       bombSet.add(Math.floor(Math.random() * totalCubes));
     }
     return bombSet;
+  };
+
+  // Generate bombs - using state to allow regeneration
+  const [bombs, setBombs] = useState<Set<number>>(() => {
+    if (typeof window === "undefined") {
+      return new Set<number>();
+    }
+    return generateBombs();
   });
 
   const getAdjacentCubes = (index: number) => {
@@ -212,6 +221,13 @@ const Hero = () => {
     }
   };
 
+  const handleRestart = () => {
+    setGameOver(false);
+    setRevealedCubes(new Set());
+    // Regenerate bombs for a new game
+    setBombs(generateBombs());
+  };
+
   // Update dimensions on window resize
   useEffect(() => {
     const handleResize = () => {
@@ -250,6 +266,27 @@ const Hero = () => {
           />
         ))}
       </div>
+
+      {/* Game Over Overlay with Start Again Button */}
+      {gameOver && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="rounded-2xl bg-white/95 p-8 text-center shadow-2xl"
+          >
+            <h2 className="mb-4 text-3xl font-bold text-gray-900">Game Over!</h2>
+            <p className="mb-6 text-gray-600">You hit a bomb! 💣</p>
+            <button
+              onClick={handleRestart}
+              className="rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-3 text-lg font-semibold text-white transition-all duration-300 hover:from-blue-700 hover:to-blue-600 hover:shadow-lg hover:scale-105 active:scale-100"
+            >
+              Start Again
+            </button>
+          </motion.div>
+        </div>
+      )}
 
       {/* Content overlay */}
       <div className="pointer-events-none relative z-10 mx-auto flex h-full max-w-7xl items-center justify-center px-6 py-24 lg:px-8">
