@@ -9,7 +9,7 @@ const NewHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
-  const slideDuration = 5000; // 5 seconds
+  const slideDuration = 10000; // 10 seconds
   const { openContactModal } = useModal();
 
   const handleScrollToSection = (sectionId: string) => {

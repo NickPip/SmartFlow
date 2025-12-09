@@ -1,6 +1,27 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+
 const Contact = () => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -30 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <section
+      ref={sectionRef}
       id="contact"
       className="relative z-20 overflow-hidden bg-[#0B1120] py-20 lg:py-[120px]"
     >
@@ -14,21 +35,42 @@ const Contact = () => {
         <div className="-mx-4 flex flex-wrap items-center">
           <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
             <div className="mb-12 lg:mb-0">
-              <span className="animate-fade-in-up mb-4 block text-lg font-semibold text-[#4B6BFB]">
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5 }}
+                className="mb-4 block text-lg font-semibold text-[#4B6BFB]"
+              >
                 Let&apos;s Connect
-              </span>
-              <h2 className="animate-fade-in-up mb-6 text-3xl font-bold text-white [animation-delay:200ms] sm:text-4xl md:text-[40px] md:leading-tight">
+              </motion.span>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="mb-6 text-3xl font-bold text-white sm:text-4xl md:text-[40px] md:leading-tight"
+              >
                 Ready to Transform Your Ideas into Reality?
-              </h2>
-              <p className="animate-fade-in-up mb-12 text-lg leading-relaxed text-gray-400 [animation-delay:400ms]">
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mb-12 text-lg leading-relaxed text-gray-400"
+              >
                 We specialize in developing cutting-edge solutions using the
                 latest technologies. Whether you need a custom software
                 solution, web application, or technical consultation, we&apos;re
                 here to help.
-              </p>
+              </motion.p>
 
               <div className="mb-12 flex flex-col space-y-8 lg:mb-0">
-                <div className="animate-fade-in-left flex items-center [animation-delay:600ms]">
+                <motion.div
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                  transition={{ delay: 0.3 }}
+                  className="flex items-center"
+                >
                   <div className="mr-6 flex h-[60px] w-[60px] items-center justify-center rounded-2xl bg-[#4B6BFB]/10 transition-transform hover:scale-110">
                     <svg
                       className="h-8 w-8 text-[#4B6BFB]"
@@ -57,9 +99,15 @@ const Contact = () => {
                     <p className="text-base text-gray-400">2nd St, New York, NY 10003, USA
                     </p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="animate-fade-in-left flex items-center [animation-delay:800ms]">
+                <motion.div
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                  transition={{ delay: 0.4 }}
+                  className="flex items-center"
+                >
                   <div className="mr-6 flex h-[60px] w-[60px] items-center justify-center rounded-2xl bg-[#4B6BFB]/10 transition-transform hover:scale-110">
                     <svg
                       className="h-8 w-8 text-[#4B6BFB]"
@@ -83,9 +131,15 @@ const Contact = () => {
                       atomicimpact@tech.com
                     </p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="animate-fade-in-left flex items-center [animation-delay:1000ms]">
+                <motion.div
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                  transition={{ delay: 0.5 }}
+                  className="flex items-center"
+                >
                   <div className="mr-6 flex h-[60px] w-[60px] items-center justify-center rounded-2xl bg-[#4B6BFB]/10 transition-transform hover:scale-110">
                     <svg
                       className="h-8 w-8 text-[#4B6BFB]"
@@ -109,13 +163,18 @@ const Contact = () => {
                       +1 (555) 123-4567
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
 
-          <div className="w-full px-4 lg:w-5/12 xl:w-4/12">
-            <div className="animate-fade-in-up rounded-xl bg-white/5 p-8 backdrop-blur-sm transition-colors duration-300 [animation-delay:400ms] hover:bg-white/10 sm:p-10">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="w-full px-4 lg:w-5/12 xl:w-4/12"
+          >
+            <div className="rounded-xl bg-white/5 p-8 backdrop-blur-sm transition-colors duration-300 hover:bg-white/10 sm:p-10">
               <h3 className="mb-8 text-2xl font-bold text-white">
                 Start Your Project
               </h3>
@@ -180,7 +239,7 @@ const Contact = () => {
                 </button>
               </form>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

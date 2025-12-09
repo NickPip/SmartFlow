@@ -1,15 +1,51 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import SectionTitle from "../Common/SectionTitle";
 import SingleFeature from "./SingleFeature";
 import featuresData from "./featuresData";
 
 const Features = () => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <section
+      ref={sectionRef}
       id="features"
       className="relative overflow-hidden bg-black py-20 lg:py-[120px]"
     >
       <div className="container relative z-10">
-        <div className="-mx-4 flex flex-wrap">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="-mx-4 flex flex-wrap"
+        >
           <div
             className="mx-auto w-full px-4 text-center"
             style={{ maxWidth: "635px" }}
@@ -22,13 +58,20 @@ const Features = () => {
               and succeed in the digital age.
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="-mx-4 mt-16 flex flex-wrap justify-center">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="-mx-4 mt-16 flex flex-wrap justify-center"
+        >
           {featuresData.map((feature, i) => (
-            <SingleFeature key={i} feature={feature} />
+            <motion.div key={i} variants={itemVariants}>
+              <SingleFeature feature={feature} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {/* Gradient Effects */}
