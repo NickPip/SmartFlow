@@ -6,6 +6,7 @@ export interface ProjectItem {
   status: "Completed" | "In Progress";
   image: string;
   tags: string[];
+  stack?: string[];
   link?: string;
 }
 
@@ -19,6 +20,7 @@ export const projectsData: ProjectItem[] = [
     status: "Completed",
     image: "/images/projects/landing.jpg",
     tags: ["SEO Optimized", "Fast Loading", "Mobile-First"],
+    stack: ["Figma", "React"],
     link: "#",
   },
   {
@@ -30,6 +32,7 @@ export const projectsData: ProjectItem[] = [
     status: "Completed",
     image: "/images/projects/crm.png",
     tags: ["Analytics Dashboard", "Automation", "Role-Based Access"],
+    stack: ["Figma", "Next.js"],
     link: "#",
   },
   {
@@ -41,6 +44,7 @@ export const projectsData: ProjectItem[] = [
     status: "In Progress",
     image: "/images/projects/n-movers.jpg",
     tags: ["Loads", "Dispatch", "RBAC", "Workflows"],
+    stack: ["Figma", "Next.js"],
     link: "#",
   },
   {
@@ -52,6 +56,7 @@ export const projectsData: ProjectItem[] = [
     status: "In Progress",
     image: "/images/projects/mobile-project.jpg",
     tags: ["Mobile", "Tracking", "Notifications"],
+    stack: ["React Native"],
     link: "#",
   },
 ];

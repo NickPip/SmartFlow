@@ -1,9 +1,27 @@
 import Image from "next/image";
+import { FaReact, FaFigma } from "react-icons/fa";
+import { SiNextdotjs } from "react-icons/si";
+import { TbBrandReactNative } from "react-icons/tb";
 import { ProjectItem } from "./projectsData";
 
 interface Props {
   project: ProjectItem;
 }
+
+const getStackIcon = (stackName: string) => {
+  switch (stackName.toLowerCase()) {
+    case "react":
+      return <FaReact className="h-4 w-4" />;
+    case "figma":
+      return <FaFigma className="h-4 w-4" />;
+    case "next.js":
+      return <SiNextdotjs className="h-4 w-4" />;
+    case "react native":
+      return <TbBrandReactNative className="h-4 w-4" />;
+    default:
+      return null;
+  }
+};
 
 export function ProjectCard({ project }: Props) {
   return (
@@ -26,16 +44,21 @@ export function ProjectCard({ project }: Props) {
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-teal-400">{project.subtitle}</p>
         <h3 className="mb-2 text-xl font-bold text-white">{project.title}</h3>
         <p className="mb-4 text-sm leading-relaxed text-slate-300">{project.description}</p>
-        <div className="mb-5 flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full border border-slate-700 bg-slate-800/70 px-3 py-1 text-xs font-medium text-slate-200"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        {project.stack && project.stack.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {project.stack.map((tech) => (
+              <div
+                key={tech}
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-sm transition-all duration-300 hover:bg-white/10"
+              >
+                <div className="flex h-5 w-5 items-center justify-center text-white">
+                  {getStackIcon(tech)}
+                </div>
+                <span className="text-xs font-medium text-white">{tech}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
