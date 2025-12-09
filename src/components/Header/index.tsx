@@ -308,7 +308,7 @@ const Header = () => {
             <motion.nav
               initial={false}
               animate={{
-                x: sticky ? -220 : 250, // Offset left by 120px when sticky to create space for button
+                x: sticky ? -220 : 140, // Offset left by 120px when sticky to create space for button
               }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
               className="pointer-events-auto"
