@@ -128,7 +128,7 @@ const Contact = () => {
                       Technical Support
                     </h3>
                     <p className="text-base text-gray-400">
-                      atomicimpact@tech.com
+                      info@atomicimpact.tech
                     </p>
                   </div>
                 </motion.div>
