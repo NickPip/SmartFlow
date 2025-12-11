@@ -161,12 +161,7 @@ const Hero = () => {
   };
 
   // Generate bombs - using state to allow regeneration
-  const [bombs, setBombs] = useState<Set<number>>(() => {
-    if (typeof window === "undefined") {
-      return new Set<number>();
-    }
-    return generateBombs();
-  });
+  const [bombs, setBombs] = useState<Set<number>>(new Set<number>());
 
   const getAdjacentCubes = (index: number) => {
     const row = Math.floor(index / GRID_COLS);
@@ -241,6 +236,18 @@ const Hero = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Regenerate bombs when dimensions are set and component is mounted
+  useEffect(() => {
+    if (isMounted && dimensions.width > 0 && dimensions.height > 0 && totalCubes > 0) {
+      const bombSet = new Set<number>();
+      const count = Math.floor(totalCubes * BOMB_PERCENTAGE);
+      while (bombSet.size < count) {
+        bombSet.add(Math.floor(Math.random() * totalCubes));
+      }
+      setBombs(bombSet);
+    }
+  }, [isMounted, dimensions.width, dimensions.height, totalCubes]);
 
   const cubes = Array.from({ length: totalCubes }, (_, i) => i);
 
