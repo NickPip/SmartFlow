@@ -136,15 +136,16 @@ const Hero = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [revealedCubes, setRevealedCubes] = useState(new Set<number>());
+  const [isMounted, setIsMounted] = useState(false);
   const [dimensions, setDimensions] = useState({
-    width: typeof window !== "undefined" ? window.innerWidth : 0,
-    height: typeof window !== "undefined" ? window.innerHeight : 0,
+    width: 0,
+    height: 0,
   });
 
   // Calculate grid size based on viewport and cube size
   const CUBE_SIZE = 32; // 2rem = 32px
-  const GRID_COLS = Math.ceil(dimensions.width / CUBE_SIZE) || 1;
-  const GRID_ROWS = Math.ceil(dimensions.height / CUBE_SIZE) || 1;
+  const GRID_COLS = isMounted && dimensions.width > 0 ? Math.ceil(dimensions.width / CUBE_SIZE) : 1;
+  const GRID_ROWS = isMounted && dimensions.height > 0 ? Math.ceil(dimensions.height / CUBE_SIZE) : 1;
   const totalCubes = GRID_COLS * GRID_ROWS;
   const BOMB_PERCENTAGE = 0.15; // 15% of cells will be bombs
 
@@ -228,8 +229,11 @@ const Hero = () => {
     setBombs(generateBombs());
   };
 
-  // Update dimensions on window resize
+  // Initialize dimensions and handle resize - only on client
   useEffect(() => {
+    setIsMounted(true);
+    setDimensions({ width: window.innerWidth, height: window.innerHeight });
+
     const handleResize = () => {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
@@ -243,6 +247,17 @@ const Hero = () => {
   // Add ref and inView state for stats animation
   const statsRef = useRef(null);
   const isInView = useInView(statsRef, { once: true });
+
+  // Don't render grid until mounted to prevent hydration mismatch
+  if (!isMounted || dimensions.width === 0 || dimensions.height === 0) {
+    return (
+      <section className="relative h-screen w-full overflow-hidden bg-[#c0c0c0]">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-[#c0c0c0]">
