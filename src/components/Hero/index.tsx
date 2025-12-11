@@ -245,19 +245,45 @@ const Hero = () => {
   const cubes = Array.from({ length: totalCubes }, (_, i) => i);
 
   // Add ref and inView state for stats animation
-  const statsRef = useRef(null);
+  const statsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(statsRef, { once: true, amount: 0.1 });
   const [shouldAnimateStats, setShouldAnimateStats] = useState(false);
 
-  // Trigger stats animation after component is mounted and visible
+  // Trigger stats animation when section scrolls into view
   useEffect(() => {
-    if (isMounted) {
-      const timer = setTimeout(() => {
+    if (!isMounted || !statsRef.current) return;
+
+    const checkVisibility = () => {
+      if (!statsRef.current) return;
+      
+      const rect = statsRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      
+      // Check if element is in viewport (with some margin)
+      const isVisible = 
+        rect.top < windowHeight * 0.8 && 
+        rect.bottom > windowHeight * 0.2;
+      
+      if (isVisible && !shouldAnimateStats) {
         setShouldAnimateStats(true);
-      }, 500);
-      return () => clearTimeout(timer);
+      }
+    };
+
+    // Check immediately
+    checkVisibility();
+
+    // Also listen to useInView hook
+    if (isInView && !shouldAnimateStats) {
+      setShouldAnimateStats(true);
     }
-  }, [isMounted]);
+
+    // Listen to scroll events as backup
+    window.addEventListener('scroll', checkVisibility, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', checkVisibility);
+    };
+  }, [isInView, isMounted, shouldAnimateStats]);
 
   // Don't render grid until mounted to prevent hydration mismatch
   if (!isMounted || dimensions.width === 0 || dimensions.height === 0) {
