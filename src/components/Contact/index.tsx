@@ -96,7 +96,8 @@ const Contact = () => {
                     <h3 className="mb-2 text-xl font-semibold text-white">
                       Development Hub
                     </h3>
-                    <p className="text-base text-gray-400">2nd St, New York, NY 10003, USA
+                    <p className="text-base text-gray-400">
+                      2nd St, New York, NY 10003, USA
                     </p>
                   </div>
                 </motion.div>
@@ -159,9 +160,12 @@ const Contact = () => {
                     <h3 className="mb-2 text-xl font-semibold text-white">
                       Phone Support
                     </h3>
-                    <p className="text-base text-gray-400">
-                      +1 (555) 123-4567
-                    </p>
+                    <a
+                      href="tel:+19295590035"
+                      className="text-base text-gray-400 transition-colors hover:text-white"
+                    >
+                      +1 (929) 559-0035
+                    </a>
                   </div>
                 </motion.div>
               </div>

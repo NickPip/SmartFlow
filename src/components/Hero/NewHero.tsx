@@ -34,8 +34,7 @@ const NewHero = () => {
       primaryButton: {
         label: "Book Free Consultation",
         action: () => {
-          // Open phone dialer - replace with your actual phone number
-          window.location.href = "tel:+1234567890";
+          window.location.href = "tel:+19295590035";
         },
       },
       secondaryButton: {
@@ -103,7 +102,10 @@ const NewHero = () => {
   };
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden bg-[#000814]">
+    <section
+      id="home"
+      className="relative h-screen w-full overflow-hidden bg-[#000814]"
+    >
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
           <motion.div
@@ -235,7 +237,7 @@ const NewHero = () => {
                   >
                     {currentSlideData.description}
                   </motion.p>
-                  
+
                   {/* CTA Buttons */}
                   <motion.div
                     initial={{ opacity: 0, y: 50 }}
@@ -252,11 +254,11 @@ const NewHero = () => {
                     {/* Primary Button */}
                     <button
                       onClick={currentSlideData.primaryButton.action}
-                      className="group flex items-center gap-2 rounded-lg bg-teal-400 px-6 py-3 text-base font-medium text-gray-900 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-teal-300 hover:shadow-teal-500/50 hover:scale-105 active:scale-100"
+                      className="group flex items-center gap-2 rounded-lg bg-teal-400 px-6 py-3 text-base font-medium text-gray-900 shadow-lg transition-all duration-300 hover:scale-105 hover:bg-teal-300 hover:shadow-xl hover:shadow-teal-500/50 active:scale-100"
                     >
                       <span>{currentSlideData.primaryButton.label}</span>
                       <svg
-                        className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 text-gray-900"
+                        className="h-5 w-5 text-gray-900 transition-transform duration-300 group-hover:translate-x-1"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -274,7 +276,7 @@ const NewHero = () => {
                     {/* Secondary Button */}
                     <button
                       onClick={currentSlideData.secondaryButton.action}
-                      className="rounded-lg border border-gray-400/50 bg-gray-900/60 px-6 py-3 text-base font-medium text-white backdrop-blur-sm transition-all duration-300 hover:border-white/80 hover:bg-gray-800/80 hover:scale-105 active:scale-100"
+                      className="rounded-lg border border-gray-400/50 bg-gray-900/60 px-6 py-3 text-base font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-white/80 hover:bg-gray-800/80 active:scale-100"
                     >
                       {currentSlideData.secondaryButton.label}
                     </button>
@@ -289,7 +291,7 @@ const NewHero = () => {
         <div className="absolute bottom-8 right-8 z-30">
           <button
             onClick={togglePause}
-            className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm transition-all duration-300 hover:bg-black/60 hover:scale-110"
+            className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/60"
             aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
           >
             {/* Circular Progress Indicator */}

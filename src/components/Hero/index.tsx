@@ -276,11 +276,13 @@ const Hero = () => {
             transition={{ duration: 0.3 }}
             className="rounded-2xl bg-white/95 p-8 text-center shadow-2xl"
           >
-            <h2 className="mb-4 text-3xl font-bold text-gray-900">Game Over!</h2>
+            <h2 className="mb-4 text-3xl font-bold text-gray-900">
+              Game Over!
+            </h2>
             <p className="mb-6 text-gray-600">You hit a bomb! 💣</p>
             <button
               onClick={handleRestart}
-              className="rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-3 text-lg font-semibold text-white transition-all duration-300 hover:from-blue-700 hover:to-blue-600 hover:shadow-lg hover:scale-105 active:scale-100"
+              className="rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-3 text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-blue-700 hover:to-blue-600 hover:shadow-lg active:scale-100"
             >
               Start Again
             </button>
@@ -352,7 +354,7 @@ const Hero = () => {
                     transition={{ duration: 1 }}
                   >
                     {isInView && (
-                      <CountUp start={0} end={50} duration={2} suffix="+" />
+                      <CountUp start={0} end={10} duration={2} suffix="+" />
                     )}
                   </motion.div>
                   <div className="text-sm text-gray-500">
@@ -367,7 +369,7 @@ const Hero = () => {
                     transition={{ duration: 1 }}
                   >
                     {isInView && (
-                      <CountUp start={0} end={15} duration={2} suffix="+" />
+                      <CountUp start={0} end={7} duration={2} suffix="+" />
                     )}
                   </motion.div>
                   <div className="text-sm text-gray-500">Team Members</div>
