@@ -53,7 +53,7 @@ export default function RootLayout({
             <ModalProvider>
               <AtomicLoader isLoading={loading} />
               <ToasterContext />
-              <Header />
+              <Header isLoading={loading} />
               {children}
               <Footer />
               <ScrollToTop />

@@ -5,7 +5,11 @@ import { usePathname } from "next/navigation";
 import { useModal } from "@/context/ModalContext";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Header = () => {
+interface HeaderProps {
+  isLoading?: boolean;
+}
+
+const Header = ({ isLoading = false }: HeaderProps) => {
   const pathUrl = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
@@ -28,18 +32,26 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleStickyNavbar);
   }, []);
 
-  // Trigger typing animation on mount
+  // Trigger typing animation only after loading completes
   useEffect(() => {
+    if (isLoading) {
+      // Reset when loading starts
+      setShowTypingAnimation(false);
+      setTypingComplete(false);
+      return;
+    }
+
+    // Start typing animation after loading completes
     const timer = setTimeout(() => {
       setShowTypingAnimation(true);
       // After animation completes (3.5s), hide cursor border
       const completeTimer = setTimeout(() => {
         setTypingComplete(true);
-      }, 4000); // 3.5s animation + 0.5s buffer
+      }, 3500); // Match the typing animation duration
       return () => clearTimeout(completeTimer);
-    }, 500); // Small delay after page load
+    }, 300); // Small delay after loading completes
     return () => clearTimeout(timer);
-  }, []);
+  }, [isLoading]);
 
   const menuItems = useMemo(
     () => [
@@ -282,11 +294,13 @@ const Header = () => {
                 <div className="relative h-6 w-[180px]">
                   <div className="absolute left-0 top-0 text-lg font-bold text-white/80">
                     {!showTypingAnimation ? (
-                      <span className="block">AI</span>
+                      <span className="block opacity-0">ATOMIC IMPACT</span>
                     ) : (
                       <div
                         className={`w-[180px] overflow-hidden whitespace-nowrap ${
-                          !typingComplete ? "border-r-2 border-indigo-600 animate-typing" : ""
+                          !typingComplete
+                            ? "border-r-2 border-indigo-600 animate-typing"
+                            : ""
                         }`}
                       >
                         ATOMIC IMPACT

@@ -246,7 +246,18 @@ const Hero = () => {
 
   // Add ref and inView state for stats animation
   const statsRef = useRef(null);
-  const isInView = useInView(statsRef, { once: true });
+  const isInView = useInView(statsRef, { once: true, amount: 0.1 });
+  const [shouldAnimateStats, setShouldAnimateStats] = useState(false);
+
+  // Trigger stats animation after component is mounted and visible
+  useEffect(() => {
+    if (isMounted) {
+      const timer = setTimeout(() => {
+        setShouldAnimateStats(true);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isMounted]);
 
   // Don't render grid until mounted to prevent hydration mismatch
   if (!isMounted || dimensions.width === 0 || dimensions.height === 0) {
@@ -368,9 +379,10 @@ const Hero = () => {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
                   >
-                    {isInView && (
+                    {shouldAnimateStats && (
                       <CountUp start={0} end={10} duration={2} suffix="+" />
                     )}
+                    {!shouldAnimateStats && <span>0+</span>}
                   </motion.div>
                   <div className="text-sm text-gray-500">
                     Projects Completed
@@ -383,9 +395,10 @@ const Hero = () => {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
                   >
-                    {isInView && (
+                    {shouldAnimateStats && (
                       <CountUp start={0} end={7} duration={2} suffix="+" />
                     )}
+                    {!shouldAnimateStats && <span>0+</span>}
                   </motion.div>
                   <div className="text-sm text-gray-500">Team Members</div>
                 </div>
@@ -396,9 +409,10 @@ const Hero = () => {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
                   >
-                    {isInView && (
+                    {shouldAnimateStats && (
                       <CountUp start={0} end={100} duration={2} suffix="%" />
                     )}
+                    {!shouldAnimateStats && <span>0%</span>}
                   </motion.div>
                   <div className="text-sm text-gray-500">
                     Client Satisfaction
