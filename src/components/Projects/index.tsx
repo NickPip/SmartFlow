@@ -16,9 +16,7 @@ export default function RecentProjects() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.1 },
     },
   };
 
@@ -27,20 +25,36 @@ export default function RecentProjects() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
+  };
+
+  // carousel helpers (same file)
+  const inProgressRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollInProgress = (dir: "left" | "right") => {
+    const el = inProgressRef.current;
+    if (!el) return;
+
+    const firstCard = el.querySelector<HTMLElement>("[data-card='project']");
+    const gap = 32;
+    const cardWidth = firstCard?.offsetWidth ?? 520;
+    const delta = cardWidth + gap;
+
+    el.scrollBy({
+      left: dir === "left" ? -delta : delta,
+      behavior: "smooth",
+    });
   };
 
   return (
     <section
       ref={sectionRef}
       id="projects"
-      className="bg-[#0b1220] py-16 text-white dark:bg-[#0b1220]"
+      className="bg-[#0b1220] py-16 text-white"
     >
       <div className="container px-4">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -61,6 +75,7 @@ export default function RecentProjects() {
           </p>
         </motion.div>
 
+        {/* Completed Projects (grid) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -71,6 +86,7 @@ export default function RecentProjects() {
             Completed Projects
           </h3>
         </motion.div>
+
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -84,6 +100,7 @@ export default function RecentProjects() {
           ))}
         </motion.div>
 
+        {/* In Progress (carousel) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -94,21 +111,67 @@ export default function RecentProjects() {
             Currently in Development
           </h3>
         </motion.div>
+
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 gap-8 md:grid-cols-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="relative"
         >
-          {inProgress.map((p) => (
-            <motion.div key={p.id} variants={itemVariants}>
-              <ProjectCard project={p} />
-            </motion.div>
-          ))}
+          {/* fade edges */}
+          
+
+          {/* arrows (no shadow, hidden on mobile) */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 right-0 z-20 hidden items-center justify-between sm:flex">
+            <button
+              type="button"
+              onClick={() => scrollInProgress("left")}
+              className="pointer-events-auto ml-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/40 text-white hover:bg-black/60"
+              aria-label="Scroll left"
+            >
+              ←
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollInProgress("right")}
+              className="pointer-events-auto mr-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/40 text-white hover:bg-black/60"
+              aria-label="Scroll right"
+            >
+              →
+            </button>
+          </div>
+
+          {/* carousel track */}
+          <div className="mx-auto max-w-6xl">
+            <div
+              ref={inProgressRef}
+              className="
+                flex gap-8 overflow-x-auto pb-2 pr-4 sm:pr-10
+                scroll-smooth [scrollbar-width:none]
+                [-ms-overflow-style:none]
+                [&::-webkit-scrollbar]:hidden
+                snap-x snap-mandatory
+              "
+            >
+              {inProgress.map((p) => (
+                <div
+                  key={p.id}
+                  data-card="project"
+                  className="
+                    snap-start flex-none
+                    w-[100%]
+                    sm:w-[78%]
+                    lg:w-[62%]
+                  "
+                >
+                  <ProjectCard project={p} />
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
   );
 }
-
-

@@ -35,7 +35,7 @@ export function ProjectCard({ project }: Props) {
           className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
           priority={false}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/10 to-black/20" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/10 to-black/20" /> */}
         <div className="absolute left-3 top-3 rounded-full bg-emerald-500 px-3 py-1 text-xs font-semibold text-white shadow">
           {project.status}
         </div>

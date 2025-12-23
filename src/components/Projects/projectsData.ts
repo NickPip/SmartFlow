@@ -59,6 +59,30 @@ export const projectsData: ProjectItem[] = [
     stack: ["React Native"],
     link: "#",
   },
+  {
+    id: 5,
+    title: "Home Rehab Physio Landing Page",
+    subtitle: "Healthcare Service Website",
+    description:
+      "Landing page for a home rehabilitation and physiotherapy service, built with modern technologies and best practices.",
+    status: "In Progress",
+    image: "/images/projects/home-rehab.jpg",
+    tags: ["Healthcare", "Landing Page", "Responsive", "Accessibility"],
+    stack: ["Figma", "React"],
+    link: "#",
+  },
+  {
+    id: 6,
+    title: "Cyped Security Landing Page",
+    subtitle: "System Security Service Website",
+    description:
+      "Landing page for a system security service, designed to build trust and drive bookings with clear service sections", 
+    status: "In Progress",
+    image: "/images/projects/selo-home.jpg",
+    tags: ["IT Security", "Landing Page", "Responsive", "Accessibility"],
+    stack: ["Figma", "React"],
+    link: "#",
+  },
 ];
 
 
