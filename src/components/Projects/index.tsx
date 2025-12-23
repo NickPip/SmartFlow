@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { ProjectCard } from "./ProjectCard";
 import { projectsData } from "./projectsData";
@@ -14,10 +14,7 @@ export default function RecentProjects() {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
   const itemVariants = {
@@ -29,8 +26,9 @@ export default function RecentProjects() {
     },
   };
 
-  // carousel helpers (same file)
+  // carousel
   const inProgressRef = useRef<HTMLDivElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const scrollInProgress = (dir: "left" | "right") => {
     const el = inProgressRef.current;
@@ -47,12 +45,59 @@ export default function RecentProjects() {
     });
   };
 
+  const cardEls = useMemo(() => {
+    const el = inProgressRef.current;
+    if (!el) return [];
+    return Array.from(el.querySelectorAll<HTMLElement>("[data-card='project']"));
+  }, [inProgress.length]);
+
+  const scrollToIndex = (index: number) => {
+    const el = inProgressRef.current;
+    if (!el) return;
+
+    const cards = Array.from(el.querySelectorAll<HTMLElement>("[data-card='project']"));
+    const target = cards[index];
+    if (!target) return;
+
+    // scroll so the card becomes centered (snap-center)
+    const left =
+      target.offsetLeft - (el.clientWidth - target.clientWidth) / 2;
+
+    el.scrollTo({ left, behavior: "smooth" });
+  };
+
+  // update active dot on scroll (based on closest card to center)
+  useEffect(() => {
+    const el = inProgressRef.current;
+    if (!el) return;
+
+    const onScroll = () => {
+      const cards = Array.from(el.querySelectorAll<HTMLElement>("[data-card='project']"));
+      if (!cards.length) return;
+
+      const center = el.scrollLeft + el.clientWidth / 2;
+      let bestIdx = 0;
+      let bestDist = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, idx) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const dist = Math.abs(center - cardCenter);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = idx;
+        }
+      });
+
+      setActiveIndex(bestIdx);
+    };
+
+    onScroll();
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [inProgress.length]);
+
   return (
-    <section
-      ref={sectionRef}
-      id="projects"
-      className="bg-[#0b1220] py-16 text-white"
-    >
+    <section ref={sectionRef} id="projects" className="bg-[#0b1220] py-16 text-white">
       <div className="container px-4">
         {/* Header */}
         <motion.div
@@ -75,16 +120,14 @@ export default function RecentProjects() {
           </p>
         </motion.div>
 
-        {/* Completed Projects (grid) */}
+        {/* Completed */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-6 text-center"
         >
-          <h3 className="text-lg font-semibold text-slate-200">
-            Completed Projects
-          </h3>
+          <h3 className="text-lg font-semibold text-slate-200">Completed Projects</h3>
         </motion.div>
 
         <motion.div
@@ -100,7 +143,7 @@ export default function RecentProjects() {
           ))}
         </motion.div>
 
-        {/* In Progress (carousel) */}
+        {/* In Progress */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -118,40 +161,41 @@ export default function RecentProjects() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="relative"
         >
-          {/* fade edges */}
-          
+          {/* arrows desktop only */}
+          {inProgress.length > 1 && (
+            <div className="pointer-events-none absolute inset-y-0 left-0 right-0 z-20 hidden items-center justify-between sm:flex">
+              <button
+                type="button"
+                onClick={() => scrollInProgress("left")}
+                className="pointer-events-auto ml-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/40 text-white hover:bg-black/60"
+                aria-label="Scroll left"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollInProgress("right")}
+                className="pointer-events-auto mr-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/40 text-white hover:bg-black/60"
+                aria-label="Scroll right"
+              >
+                →
+              </button>
+            </div>
+          )}
 
-          {/* arrows (no shadow, hidden on mobile) */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 right-0 z-20 hidden items-center justify-between sm:flex">
-            <button
-              type="button"
-              onClick={() => scrollInProgress("left")}
-              className="pointer-events-auto ml-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/40 text-white hover:bg-black/60"
-              aria-label="Scroll left"
-            >
-              ←
-            </button>
-
-            <button
-              type="button"
-              onClick={() => scrollInProgress("right")}
-              className="pointer-events-auto mr-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/40 text-white hover:bg-black/60"
-              aria-label="Scroll right"
-            >
-              →
-            </button>
-          </div>
-
-          {/* carousel track */}
+          {/* Track */}
           <div className="mx-auto max-w-6xl">
             <div
               ref={inProgressRef}
               className="
-                flex gap-8 overflow-x-auto pb-2 pr-4 sm:pr-10
+                flex gap-8 overflow-x-auto pb-2
                 scroll-smooth [scrollbar-width:none]
                 [-ms-overflow-style:none]
                 [&::-webkit-scrollbar]:hidden
                 snap-x snap-mandatory
+                before:content-[''] before:flex-none before:w-4
+                after:content-[''] after:flex-none after:w-4
+                sm:before:w-0 sm:after:w-0
               "
             >
               {inProgress.map((p) => (
@@ -159,8 +203,9 @@ export default function RecentProjects() {
                   key={p.id}
                   data-card="project"
                   className="
-                    snap-start flex-none
-                    w-[100%]
+                    flex-none
+                    snap-center sm:snap-start
+                    w-[92%]
                     sm:w-[78%]
                     lg:w-[62%]
                   "
@@ -169,6 +214,26 @@ export default function RecentProjects() {
                 </div>
               ))}
             </div>
+
+            {/* ✅ DOT INDICATOR */}
+            {inProgress.length > 1 && (
+              <div className="mt-5 flex items-center justify-center gap-2">
+                {inProgress.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => scrollToIndex(idx)}
+                    aria-label={`Go to project ${idx + 1}`}
+                    className={[
+                      "h-2 rounded-full transition-all",
+                      idx === activeIndex
+                        ? "w-6 bg-teal-300"
+                        : "w-2 bg-white/25 hover:bg-white/40",
+                    ].join(" ")}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </motion.div>
       </div>

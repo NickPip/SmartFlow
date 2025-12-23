@@ -61,7 +61,7 @@ export const projectsData: ProjectItem[] = [
   },
   {
     id: 5,
-    title: "Home Rehab Physio Landing Page",
+    title: "Home Rehab Landing Page",
     subtitle: "Healthcare Service Website",
     description:
       "Landing page for a home rehabilitation and physiotherapy service, built with modern technologies and best practices.",
@@ -76,7 +76,7 @@ export const projectsData: ProjectItem[] = [
     title: "Cyped Security Landing Page",
     subtitle: "System Security Service Website",
     description:
-      "Landing page for a system security service, designed to build trust and drive bookings with clear service sections", 
+      "Landing page for a system security service, designed to build trust and drive bookings with clear service sections",
     status: "In Progress",
     image: "/images/projects/selo-home.jpg",
     tags: ["IT Security", "Landing Page", "Responsive", "Accessibility"],
@@ -84,5 +84,3 @@ export const projectsData: ProjectItem[] = [
     link: "#",
   },
 ];
-
-
