@@ -40,3 +40,5 @@ export const techStackData = [
     icon: <FaFigma className="h-5 w-5" />,
   },
 ];
+
+

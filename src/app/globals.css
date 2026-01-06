@@ -59,12 +59,6 @@
     }
   }
 
-  @keyframes l1 {
-    to {
-      background-size: 120% 100%;
-    }
-  }
-
   /* Animation Classes */
   .animate-fade-in-up {
     animation: fade-in-up 0.6s ease-out forwards;
@@ -84,31 +78,6 @@
 
   .animate-scale-in {
     animation: scale-in 0.6s ease-out forwards;
-  }
-
-  /* Atomic Loader */
-  .atomic-loader {
-    width: fit-content;
-    font-size: 40px;
-    font-family: system-ui, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: transparent;
-    -webkit-text-stroke: 1px white;
-    background: conic-gradient(white 0 0) 0/0% 100% no-repeat text;
-    animation: l1 1s linear infinite;
-  }
-
-  @media (min-width: 640px) {
-    .atomic-loader {
-      font-size: 48px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .atomic-loader {
-      font-size: 56px;
-    }
   }
 }
 

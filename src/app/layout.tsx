@@ -10,7 +10,7 @@ import { SessionProvider } from "next-auth/react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import AtomicLoader from "@/components/AtomicLoader";
+import PreLoader from "@/components/Common/PreLoader";
 import ToasterContext from "@/components/Common/ToasterContext";
 import ContactModal from "@/components/ContactModal";
 import { ModalProvider } from "@/context/ModalContext";
@@ -51,13 +51,18 @@ export default function RootLayout({
             defaultTheme="dark"
           >
             <ModalProvider>
-              <AtomicLoader isLoading={loading} />
-              <ToasterContext />
-              <Header isLoading={loading} />
-              {children}
-              <Footer />
-              <ScrollToTop />
-              <ContactModal />
+              {loading ? (
+                <PreLoader />
+              ) : (
+                <>
+                  <ToasterContext />
+                  <Header />
+                  {children}
+                  <Footer />
+                  <ScrollToTop />
+                  <ContactModal />
+                </>
+              )}
             </ModalProvider>
           </ThemeProvider>
         </SessionProvider>

@@ -9,7 +9,6 @@ const NewHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const slideDuration = 10000; // 10 seconds
   const { openContactModal } = useModal();
 
@@ -72,14 +71,6 @@ const NewHero = () => {
       },
     },
   ];
-
-  // Mark initial load as complete after first render to trigger animation
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsInitialLoad(false);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     if (isPaused) {
@@ -209,11 +200,9 @@ const NewHero = () => {
           <AnimatePresence mode="wait">
             {(() => {
               const currentSlideData = slides[currentSlide];
-              // Use a unique key for initial load to force animation on first render
-              const slideKey = isInitialLoad ? `initial-${currentSlide}` : currentSlide;
               return (
                 <motion.div
-                  key={slideKey}
+                  key={currentSlide}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
