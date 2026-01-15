@@ -12,7 +12,7 @@ const teamMembers = [
       "Visionary leader with expertise in AI and software development. Building the future of technology.",
     image: "/images/team/nikoloz.png",
     bgColor: "bg-emerald-600",
-    linkedinLink: "https://www.linkedin.com/in/nikoloz",
+    linkedinLink: "https://www.linkedin.com/in/pipchest/",
   },
   {
     name: "Ed",
@@ -21,7 +21,7 @@ const teamMembers = [
       "Expert developer with deep knowledge in modern web technologies and system architecture. Creating robust and scalable solutions.",
     image: "/images/team/ed.png",
     bgColor: "bg-blue-600",
-    linkedinLink: "https://www.linkedin.com/in/ed",
+    linkedinLink: "https://www.linkedin.com/in/nguyen-duy-khuong-183624194/?originalSubdomain=vn",
   },
   {
     name: "Iva",

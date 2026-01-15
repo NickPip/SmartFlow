@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { ProjectCard } from "./ProjectCard";
 import { projectsData } from "./projectsData";
+import ProjectDetailModal from "./ProjectDetailModal";
 
 export default function RecentProjects() {
   const sectionRef = useRef(null);
@@ -26,7 +27,70 @@ export default function RecentProjects() {
     },
   };
 
-  // carousel
+  // carousel for completed projects
+  const completedRef = useRef<HTMLDivElement | null>(null);
+  const [completedActiveIndex, setCompletedActiveIndex] = useState(0);
+
+  const scrollCompleted = (dir: "left" | "right") => {
+    const el = completedRef.current;
+    if (!el) return;
+
+    const firstCard = el.querySelector<HTMLElement>("[data-card='completed']");
+    const gap = 32;
+    const cardWidth = firstCard?.offsetWidth ?? 520;
+    const delta = cardWidth + gap;
+
+    el.scrollBy({
+      left: dir === "left" ? -delta : delta,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollCompletedToIndex = (index: number) => {
+    const el = completedRef.current;
+    if (!el) return;
+
+    const cards = Array.from(el.querySelectorAll<HTMLElement>("[data-card='completed']"));
+    const target = cards[index];
+    if (!target) return;
+
+    const left =
+      target.offsetLeft - (el.clientWidth - target.clientWidth) / 2;
+
+    el.scrollTo({ left, behavior: "smooth" });
+  };
+
+  // update active dot on scroll for completed projects
+  useEffect(() => {
+    const el = completedRef.current;
+    if (!el) return;
+
+    const onScroll = () => {
+      const cards = Array.from(el.querySelectorAll<HTMLElement>("[data-card='completed']"));
+      if (!cards.length) return;
+
+      const center = el.scrollLeft + el.clientWidth / 2;
+      let bestIdx = 0;
+      let bestDist = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, idx) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const dist = Math.abs(center - cardCenter);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = idx;
+        }
+      });
+
+      setCompletedActiveIndex(bestIdx);
+    };
+
+    onScroll();
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [completed.length]);
+
+  // carousel for in progress projects
   const inProgressRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -44,12 +108,6 @@ export default function RecentProjects() {
       behavior: "smooth",
     });
   };
-
-  const cardEls = useMemo(() => {
-    const el = inProgressRef.current;
-    if (!el) return [];
-    return Array.from(el.querySelectorAll<HTMLElement>("[data-card='project']"));
-  }, [inProgress.length]);
 
   const scrollToIndex = (index: number) => {
     const el = inProgressRef.current;
@@ -131,16 +189,85 @@ export default function RecentProjects() {
         </motion.div>
 
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="relative mb-12"
         >
-          {completed.map((p) => (
-            <motion.div key={p.id} variants={itemVariants}>
-              <ProjectCard project={p} />
-            </motion.div>
-          ))}
+          {/* arrows desktop only */}
+          {completed.length > 1 && (
+            <div className="pointer-events-none absolute inset-y-0 left-0 right-0 z-20 hidden items-center justify-between sm:flex">
+              <button
+                type="button"
+                onClick={() => scrollCompleted("left")}
+                className="pointer-events-auto ml-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/40 text-white hover:bg-black/60"
+                aria-label="Scroll left"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollCompleted("right")}
+                className="pointer-events-auto mr-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/40 text-white hover:bg-black/60"
+                aria-label="Scroll right"
+              >
+                →
+              </button>
+            </div>
+          )}
+
+          {/* Track */}
+          <div className="mx-auto max-w-6xl">
+            <div
+              ref={completedRef}
+              className="
+                flex gap-8 overflow-x-auto pb-2
+                scroll-smooth [scrollbar-width:none]
+                [-ms-overflow-style:none]
+                [&::-webkit-scrollbar]:hidden
+                snap-x snap-mandatory
+                before:content-[''] before:flex-none before:w-4
+                after:content-[''] after:flex-none after:w-4
+                sm:before:w-0 sm:after:w-0
+              "
+            >
+              {completed.map((p) => (
+                <div
+                  key={p.id}
+                  data-card="completed"
+                  className="
+                    flex-none
+                    snap-center sm:snap-start
+                    w-[92%]
+                    sm:w-[78%]
+                    lg:w-[62%]
+                  "
+                >
+                  <ProjectCard project={p} />
+                </div>
+              ))}
+            </div>
+
+            {/* DOT INDICATOR */}
+            {completed.length > 1 && (
+              <div className="mt-5 flex items-center justify-center gap-2">
+                {completed.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => scrollCompletedToIndex(idx)}
+                    aria-label={`Go to project ${idx + 1}`}
+                    className={[
+                      "h-2 rounded-full transition-all",
+                      idx === completedActiveIndex
+                        ? "w-6 bg-teal-300"
+                        : "w-2 bg-white/25 hover:bg-white/40",
+                    ].join(" ")}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </motion.div>
 
         {/* In Progress */}
@@ -237,6 +364,7 @@ export default function RecentProjects() {
           </div>
         </motion.div>
       </div>
+      <ProjectDetailModal />
     </section>
   );
 }

@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { FaReact, FaFigma } from "react-icons/fa";
 import { SiNextdotjs } from "react-icons/si";
 import { TbBrandReactNative } from "react-icons/tb";
 import { ProjectItem } from "./projectsData";
+import { useModal } from "@/context/ModalContext";
 
 interface Props {
   project: ProjectItem;
@@ -24,8 +27,17 @@ const getStackIcon = (stackName: string) => {
 };
 
 export function ProjectCard({ project }: Props) {
+  const { openProjectModal } = useModal();
+
+  const handleClick = () => {
+    openProjectModal(project);
+  };
+
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/60 shadow-sm backdrop-blur-sm transition hover:shadow-lg">
+    <div
+      onClick={handleClick}
+      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/60 shadow-sm backdrop-blur-sm transition hover:shadow-lg hover:border-teal-500/50"
+    >
       <div className="relative h-56 w-full overflow-hidden sm:h-64">
         <Image
           src={project.image}

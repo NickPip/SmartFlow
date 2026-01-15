@@ -12,7 +12,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
           <p className="animate-fade-in-up text-sm text-gray-400">
-            © {new Date().getFullYear()} Play. All rights reserved.
+            © {new Date().getFullYear()} ATOMIC IMPACT. All rights reserved.
           </p>
 
           {/* Social Links */}
