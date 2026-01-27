@@ -64,7 +64,12 @@ export const projectsData: ProjectItem[] = [
       "Operations-grade CRM with pipeline tracking, analytics dashboards, and automated workflows.",
     status: "Completed",
     image: "/images/projects/crm.png",
-    tags: ["Analytics Dashboard", "Automation", "Role-Based Access", "Audit Logs"],
+    tags: [
+      "Analytics Dashboard",
+      "Automation",
+      "Role-Based Access",
+      "Audit Logs",
+    ],
     stack: ["Figma", "Next.js", "React"],
     link: "#",
     detailedDescription:
@@ -101,7 +106,14 @@ export const projectsData: ProjectItem[] = [
       "Operations CRM tailored for N‑Movers: load management, dispatch workflows, user/role management, and granular permissions.",
     status: "In Progress",
     image: "/images/projects/n-movers.jpg",
-    tags: ["Loads", "Dispatch", "RBAC", "Workflows", "Real-time Tracking", "User Management"],
+    tags: [
+      "Loads",
+      "Dispatch",
+      "RBAC",
+      "Workflows",
+      "Real-time Tracking",
+      "User Management",
+    ],
     stack: ["Figma", "Next.js", "React"],
     link: "#",
     detailedDescription:
@@ -149,10 +161,17 @@ export const projectsData: ProjectItem[] = [
     title: "Home Rehab Landing Page",
     subtitle: "Healthcare Service Website",
     description:
-      "Landing page for a home rehabilitation and physiotherapy service, built with modern technologies and best practices.",
+      "Landing page for a home rehabilitation and physiotherapy service.",
     status: "Completed",
     image: "/images/projects/home-rehab.jpg",
-    tags: ["Healthcare", "Landing Page", "Responsive", "Accessibility", "Multi-language", "SEO Optimized"],
+    tags: [
+      "Healthcare",
+      "Landing Page",
+      "Responsive",
+      "Accessibility",
+      "Multi-language",
+      "SEO Optimized",
+    ],
     stack: ["Figma", "React", "Next.js"],
     link: "#",
     detailedDescription:
