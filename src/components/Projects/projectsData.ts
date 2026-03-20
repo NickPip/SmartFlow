@@ -211,4 +211,16 @@ export const projectsData: ProjectItem[] = [
     stack: ["Figma", "React"],
     link: "#",
   },
+  {
+    id: 7,
+    title: "Traekkr",
+    subtitle: "Cyber Security Company",
+    description:
+      "Landing page and blog site for a cyber security company. Built with Next.js and a full admin panel for content management.",
+    status: "In Progress",
+    image: "/images/projects/traekkr.png",
+    tags: ["Cyber Security", "Landing Page", "Blog", "Admin Panel", "Estonia"],
+    stack: ["Next.js", "React"],
+    link: "#",
+  },
 ];
