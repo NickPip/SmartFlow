@@ -2,15 +2,14 @@
 
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
+import { motion } from "framer-motion";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import PreLoader from "@/components/Common/PreLoader";
 import ToasterContext from "@/components/Common/ToasterContext";
 import ContactModal from "@/components/ContactModal";
 import { ModalProvider } from "@/context/ModalContext";
@@ -26,12 +25,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -51,18 +44,19 @@ export default function RootLayout({
             defaultTheme="dark"
           >
             <ModalProvider>
-              {loading ? (
-                <PreLoader />
-              ) : (
-                <>
-                  <ToasterContext />
-                  <Header />
-                  {children}
-                  <Footer />
-                  <ScrollToTop />
-                  <ContactModal />
-                </>
-              )}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="min-h-screen"
+              >
+                <ToasterContext />
+                <Header />
+                {children}
+                <Footer />
+                <ScrollToTop />
+                <ContactModal />
+              </motion.div>
             </ModalProvider>
           </ThemeProvider>
         </SessionProvider>
