@@ -36,9 +36,9 @@ export function ProjectCard({ project }: Props) {
   return (
     <div
       onClick={handleClick}
-      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/60 shadow-sm backdrop-blur-sm transition hover:shadow-lg hover:border-teal-500/50"
+      className="group relative flex h-[480px] flex-col overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/60 shadow-sm backdrop-blur-sm transition hover:shadow-lg hover:border-teal-500/50 sm:h-auto"
     >
-      <div className="relative h-56 w-full overflow-hidden sm:h-64">
+      <div className="relative h-56 shrink-0 w-full overflow-hidden sm:h-64">
         <Image
           src={project.image}
           alt={project.title}
@@ -52,12 +52,12 @@ export function ProjectCard({ project }: Props) {
           {project.status}
         </div>
       </div>
-      <div className="p-6">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-teal-400">{project.subtitle}</p>
-        <h3 className="mb-2 text-xl font-bold text-white">{project.title}</h3>
-        <p className="mb-4 text-sm leading-relaxed text-slate-300">{project.description}</p>
+      <div className="flex min-h-0 flex-1 flex-col p-6">
+        <p className="mb-2 shrink-0 text-xs font-semibold uppercase tracking-widest text-teal-400">{project.subtitle}</p>
+        <h3 className="mb-2 line-clamp-2 shrink-0 text-xl font-bold text-white">{project.title}</h3>
+        <p className="mb-4 line-clamp-3 shrink-0 text-sm leading-relaxed text-slate-300">{project.description}</p>
         {project.stack && project.stack.length > 0 && (
-          <div className="flex flex-wrap gap-2">
+          <div className="mt-auto flex max-h-14 flex-wrap gap-2 overflow-hidden sm:max-h-none">
             {project.stack.map((tech) => (
               <div
                 key={tech}
