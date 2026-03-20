@@ -11,8 +11,41 @@ const Header = () => {
   const [sticky, setSticky] = useState(false);
   const { openContactModal } = useModal();
   const [activeSection, setActiveSection] = useState("");
-  const [showTypingAnimation, setShowTypingAnimation] = useState(false);
+  const [displayText, setDisplayText] = useState("");
   const [typingComplete, setTypingComplete] = useState(false);
+
+  const LOGO_TEXT = "ATOMIC IMPACT";
+
+  // Realistic character-by-character typing animation
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setDisplayText(LOGO_TEXT[0]);
+    }, 400);
+
+    return () => clearTimeout(delay);
+  }, []);
+
+  useEffect(() => {
+    if (displayText.length === 0 || displayText.length >= LOGO_TEXT.length) {
+      if (displayText.length >= LOGO_TEXT.length) {
+        const doneTimer = setTimeout(() => setTypingComplete(true), 800);
+        return () => clearTimeout(doneTimer);
+      }
+      return;
+    }
+
+    const charIndex = displayText.length;
+    const char = LOGO_TEXT[charIndex];
+    const isSpace = char === " ";
+    const baseDelay = 70 + Math.random() * 50;
+    const delay = isSpace ? baseDelay * 1.4 : baseDelay;
+
+    const timer = setTimeout(() => {
+      setDisplayText(LOGO_TEXT.slice(0, charIndex + 1));
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [displayText]);
 
   // Sticky Navbar
   const handleStickyNavbar = () => {
@@ -26,19 +59,6 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleStickyNavbar);
     return () => window.removeEventListener("scroll", handleStickyNavbar);
-  }, []);
-
-  // Trigger typing animation on mount
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTypingAnimation(true);
-      // After animation completes (3.5s), hide cursor border
-      const completeTimer = setTimeout(() => {
-        setTypingComplete(true);
-      }, 4000); // 3.5s animation + 0.5s buffer
-      return () => clearTimeout(completeTimer);
-    }, 500); // Small delay after page load
-    return () => clearTimeout(timer);
   }, []);
 
   const menuItems = useMemo(
@@ -279,18 +299,20 @@ const Header = () => {
                 </svg>
               </div>
               <div className="flex flex-col gap-0">
-                <div className="relative h-6 w-[180px]">
+                <div className="relative h-6">
                   <div className="absolute left-0 top-0 text-lg font-bold text-white/80">
-                    {!showTypingAnimation ? (
+                    {displayText.length === 0 ? (
                       <span className="block">AI</span>
                     ) : (
-                      <div
-                        className={`w-[180px] overflow-hidden whitespace-nowrap ${
-                          !typingComplete ? "border-r-2 border-indigo-600 animate-typing" : ""
-                        }`}
-                      >
-                        ATOMIC IMPACT
-                      </div>
+                      <span className="inline-flex items-center">
+                        {displayText}
+                        {!typingComplete && (
+                          <span
+                            className="ml-0.5 inline-block h-4 w-0.5 shrink-0 animate-cursor-blink bg-indigo-500"
+                            aria-hidden
+                          />
+                        )}
+                      </span>
                     )}
                   </div>
                 </div>

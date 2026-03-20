@@ -77,7 +77,6 @@ const config: Config = {
       },
       animation: {
         "spin-slow": "spin 8s linear infinite",
-        typing: "typing 3.5s steps(40, end)",
         hover: "hover 3s ease-in-out infinite",
         twinkle: "twinkle 2s ease-in-out infinite",
         "slide-slow": "slide 20s linear infinite",
@@ -85,7 +84,6 @@ const config: Config = {
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
       keyframes: {
-        typing: { "0%": { width: "0" }, "100%": { width: "180px" } },
         blink: { "0%, 100%": { opacity: "1" }, "50%": { opacity: "0" } },
         hover: {
           "0%, 100%": { transform: "translateY(0)" },
