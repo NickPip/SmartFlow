@@ -89,7 +89,7 @@ export default async function Post({ params }: Props) {
               >
                 <Image
                   src={post.coverImage}
-                  alt="image"
+                  alt={post.title}
                   width={1288}
                   height={500}
                   className="h-full w-full object-cover object-center"
@@ -100,7 +100,7 @@ export default async function Post({ params }: Props) {
                       <div className="mr-4 h-10 w-10 overflow-hidden rounded-full">
                         <Image
                           src={post.authorImage}
-                          alt="image"
+                          alt={`${post.author} profile`}
                           className="w-full"
                           width={40}
                           height={40}
@@ -203,7 +203,7 @@ export default async function Post({ params }: Props) {
                     >
                       <Image
                         src="/images/blog/bannder-ad.png"
-                        alt="image"
+                        alt="Blog newsletter banner"
                         className="w-full"
                         width={408}
                         height={254}

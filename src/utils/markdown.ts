@@ -22,9 +22,11 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
   const items: any = {};
 
   function processImages(content: string) {
-    // You can modify this function to handle image processing
-    // For example, replace image paths with actual HTML image tags
-    return content.replace(/!\[.*?\]\((.*?)\)/g, '<img src="$1" alt="" />');
+    // Preserve alt text from markdown: ![alt text](url) -> <img src="url" alt="alt text" />
+    return content.replace(
+      /!\[(.*?)\]\((.*?)\)/g,
+      (_, alt, src) => `<img src="${src}" alt="${alt.replace(/"/g, "&quot;")}" />`
+    );
   }
 
   // Ensure only the minimal needed data is exposed

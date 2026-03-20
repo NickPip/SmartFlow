@@ -16,7 +16,7 @@ const PopularArticle = (props: {
         <div className={`mr-5 overflow-hidden rounded`}>
           <Image
             src={image}
-            alt="image"
+            alt={title || "Article thumbnail"}
             width={80}
             height={80}
             objectFit="cover"
