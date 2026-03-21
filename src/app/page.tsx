@@ -2,7 +2,6 @@ import About from "@/components/About";
 import ScrollUp from "@/components/Common/ScrollUp";
 import Contact from "@/components/Contact";
 import Features from "@/components/Features";
-import Hero from "@/components/Hero";
 import NewHero from "@/components/Hero/NewHero";
 import RecentProjects from "@/components/Projects";
 import Process from "@/components/Process";
@@ -21,7 +20,6 @@ export default function Home() {
   return (
     <>
       <NewHero />
-      <Hero />
       <RecentProjects />
       <Process />
       <Team />
