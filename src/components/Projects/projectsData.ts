@@ -23,6 +23,39 @@ export interface ProjectItem {
 
 export const projectsData: ProjectItem[] = [
   {
+    id: 7,
+    title: "Traekkr",
+    subtitle: "Cyber Security Company",
+    description:
+      "Blog site for a leading Estonian cyber security company. Full admin panel for content management.",
+    status: "Completed",
+    image: "/images/projects/traekkr.png",
+    tags: ["Cyber Security", "Landing Page", "Blog", "Admin Panel", "Estonia"],
+    stack: ["Next.js", "React"],
+    link: "#",
+    detailedDescription:
+      "A comprehensive web platform for Traekkr, a leading Estonian cyber security company. The site combines a professional landing page with a dedicated blog section for publishing security insights, threat analyses, and industry articles. Built with Next.js for optimal performance and SEO, the platform includes a full admin panel that allows the team to manage all content, publish and schedule blog posts, update service offerings, and maintain the site without developer intervention. The design delivers a modern, trustworthy experience for enterprise clients seeking cyber security solutions in the Estonian market.",
+    features: [
+      "Professional Landing Page with Service Showcase",
+      "Blog Platform for Cyber Security Articles",
+      "Full Admin Panel for Content Management",
+      "Article Publishing & Scheduling",
+      "SEO Optimization for Security Industry",
+      "Responsive Design for All Devices",
+      "Fast Loading with Next.js Optimization",
+    ],
+    backendInfo:
+      "Built with Next.js API routes and a robust backend for content management. The admin panel provides RESTful APIs for managing blog posts, pages, and site configuration.",
+    adminPanelInfo:
+      "Comprehensive admin dashboard for managing the entire site. Features include blog post creation and editing, content scheduling, service section management, media library, and SEO settings. Designed for non-technical users to maintain the site independently.",
+    technicalDetails: {
+      architecture: "Server-Side Rendering (SSR) with Next.js App Router",
+      database: "Database with Prisma ORM",
+      deployment: "Vercel or cloud-hosted",
+      api: "RESTful API with Next.js API Routes",
+    },
+  },
+  {
     id: 1,
     title: "Arali Group Landing Page",
     subtitle: "High-converting Web Design",
@@ -210,38 +243,5 @@ export const projectsData: ProjectItem[] = [
     tags: ["IT Security", "Landing Page", "Responsive", "Accessibility"],
     stack: ["Figma", "React"],
     link: "#",
-  },
-  {
-    id: 7,
-    title: "Traekkr",
-    subtitle: "Cyber Security Company",
-    description:
-      "Landing page and blog site for a leading Estonian cyber security company. Built with Next.js and a full admin panel for content management.",
-    status: "In Progress",
-    image: "/images/projects/traekkr.png",
-    tags: ["Cyber Security", "Landing Page", "Blog", "Admin Panel", "Estonia"],
-    stack: ["Next.js", "React"],
-    link: "#",
-    detailedDescription:
-      "A comprehensive web platform for Traekkr, a leading Estonian cyber security company. The site combines a professional landing page with a dedicated blog section for publishing security insights, threat analyses, and industry articles. Built with Next.js for optimal performance and SEO, the platform includes a full admin panel that allows the team to manage all content, publish and schedule blog posts, update service offerings, and maintain the site without developer intervention. The design delivers a modern, trustworthy experience for enterprise clients seeking cyber security solutions in the Estonian market.",
-    features: [
-      "Professional Landing Page with Service Showcase",
-      "Blog Platform for Cyber Security Articles",
-      "Full Admin Panel for Content Management",
-      "Article Publishing & Scheduling",
-      "SEO Optimization for Security Industry",
-      "Responsive Design for All Devices",
-      "Fast Loading with Next.js Optimization",
-    ],
-    backendInfo:
-      "Built with Next.js API routes and a robust backend for content management. The admin panel provides RESTful APIs for managing blog posts, pages, and site configuration.",
-    adminPanelInfo:
-      "Comprehensive admin dashboard for managing the entire site. Features include blog post creation and editing, content scheduling, service section management, media library, and SEO settings. Designed for non-technical users to maintain the site independently.",
-    technicalDetails: {
-      architecture: "Server-Side Rendering (SSR) with Next.js App Router",
-      database: "Database with Prisma ORM",
-      deployment: "Vercel or cloud-hosted",
-      api: "RESTful API with Next.js API Routes",
-    },
   },
 ];
