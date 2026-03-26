@@ -3,23 +3,25 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://atomicimpact.engine
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Atomic Impact Engineering",
+  name: "Atomic Impact",
+  alternateName: "Atomic Impact Engineering",
   url: baseUrl,
   description:
-    "AI Engineering - Transforming complex challenges into elegant solutions. We specialize in developing cutting-edge solutions using the latest technologies.",
+    "Atomic Impact builds web, mobile, and AI-powered software for teams worldwide.",
   sameAs: [],
 };
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Atomic Impact Engineering",
+  name: "Atomic Impact",
   url: baseUrl,
   description:
-    "AI Engineering - Transforming complex challenges into elegant solutions. We specialize in developing cutting-edge solutions using the latest technologies.",
+    "Atomic Impact — software development, AI engineering, and custom digital products.",
   publisher: {
     "@type": "Organization",
-    name: "Atomic Impact Engineering",
+    name: "Atomic Impact",
+    alternateName: "Atomic Impact Engineering",
   },
 };
 

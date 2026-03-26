@@ -9,11 +9,11 @@ import Team from "@/components/Team";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AI Engineering - Building Digital Excellence",
+  title: "Atomic Impact — Software & AI Engineering",
   description:
-    "AI Engineering - Transforming complex challenges into elegant solutions. We specialize in developing cutting-edge solutions using the latest technologies.",
+    "Atomic Impact builds web, mobile, and AI-powered software. We transform complex challenges into reliable products—from landing pages to full-stack platforms.",
   keywords:
-    "AI Engineering, Software Development, Digital Solutions, Web Development, Mobile Apps, Cloud Services",
+    "Atomic Impact, Atomic Impact Engineering, software development, AI engineering, web development, mobile apps, custom software",
 };
 
 export default function Home() {

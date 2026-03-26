@@ -10,20 +10,25 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://atomicimpact.engineering";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "AI Engineering - Building Digital Excellence",
-    template: "%s | AI Engineering",
+    default: "Atomic Impact — Software & AI Engineering",
+    template: "%s | Atomic Impact",
   },
   description:
-    "AI Engineering - Transforming complex challenges into elegant solutions. We specialize in developing cutting-edge solutions using the latest technologies.",
+    "Atomic Impact builds web, mobile, and AI-powered software. We ship fast, SEO-friendly products and enterprise systems for teams worldwide.",
   keywords: [
-    "AI Engineering",
+    "Atomic Impact",
+    "Atomic Impact Engineering",
     "Software Development",
-    "Digital Solutions",
+    "AI Engineering",
     "Web Development",
     "Mobile Apps",
-    "Cloud Services",
+    "Custom Software",
   ],
   icons: {
     icon: [
@@ -33,6 +38,11 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
+    url: siteUrl,
+    siteName: "Atomic Impact",
+    title: "Atomic Impact — Software & AI Engineering",
+    description:
+      "Atomic Impact builds web, mobile, and AI-powered software. Enterprise-ready delivery from atomicimpact.engineering.",
   },
 };
 
