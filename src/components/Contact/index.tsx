@@ -1,11 +1,40 @@
 "use client";
 
-import { useRef } from "react";
+import { buildMailtoUrl } from "@/utils/buildMailtoUrl";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+
+const PROJECT_TYPE_LABELS: Record<string, string> = {
+  web: "Web Development",
+  mobile: "Mobile App",
+  ai: "AI Solution",
+  consulting: "Technical Consulting",
+};
 
 const Contact = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [projectType, setProjectType] = useState("");
+  const [projectDetails, setProjectDetails] = useState("");
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const typeLabel =
+      projectType && PROJECT_TYPE_LABELS[projectType]
+        ? PROJECT_TYPE_LABELS[projectType]
+        : projectType || "—";
+    const body = [
+      `Full name: ${fullName}`,
+      `Work email: ${email}`,
+      `Project type: ${typeLabel}`,
+      "",
+      "Project details:",
+      projectDetails || "—",
+    ].join("\n");
+    window.location.href = buildMailtoUrl("Website contact: Start Your Project", body);
+  }
 
   const itemVariants = {
     hidden: { opacity: 0, x: -30 },
@@ -182,13 +211,17 @@ const Contact = () => {
               <h3 className="mb-8 text-2xl font-bold text-white">
                 Start Your Project
               </h3>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-6">
                   <label className="mb-3 block text-sm font-medium text-gray-300">
                     Full Name*
                   </label>
                   <input
                     type="text"
+                    name="fullName"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
                     placeholder="John Doe"
                     className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white transition-all duration-300 placeholder:text-gray-500 hover:border-white/20 focus:border-[#4B6BFB] focus:outline-none"
                   />
@@ -199,6 +232,10 @@ const Contact = () => {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                     placeholder="you@company.com"
                     className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white transition-all duration-300 placeholder:text-gray-500 hover:border-white/20 focus:border-[#4B6BFB] focus:outline-none"
                   />
@@ -207,7 +244,13 @@ const Contact = () => {
                   <label className="mb-3 block text-sm font-medium text-gray-300">
                     Project Type*
                   </label>
-                  <select className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white transition-all duration-300 hover:border-white/20 focus:border-[#4B6BFB] focus:outline-none">
+                  <select
+                    name="projectType"
+                    value={projectType}
+                    onChange={(e) => setProjectType(e.target.value)}
+                    required
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white transition-all duration-300 hover:border-white/20 focus:border-[#4B6BFB] focus:outline-none"
+                  >
                     <option value="" className="bg-[#0B1120] text-gray-500">
                       Select project type
                     </option>
@@ -230,7 +273,10 @@ const Contact = () => {
                     Project Details
                   </label>
                   <textarea
+                    name="projectDetails"
                     rows={4}
+                    value={projectDetails}
+                    onChange={(e) => setProjectDetails(e.target.value)}
                     placeholder="Tell us about your project requirements..."
                     className="w-full rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-base text-white transition-all duration-300 placeholder:text-gray-500 hover:border-white/20 focus:border-[#4B6BFB] focus:outline-none"
                   ></textarea>

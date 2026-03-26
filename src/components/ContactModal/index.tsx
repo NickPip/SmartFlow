@@ -1,6 +1,7 @@
 "use client";
 
 import { useModal } from "@/context/ModalContext";
+import { buildMailtoUrl } from "@/utils/buildMailtoUrl";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FiX } from "react-icons/fi";
@@ -16,12 +17,24 @@ export default function ContactModal() {
     projectDescription: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // Here you would typically handle form submission
-    console.log("Form submitted:", formData);
+    const body = [
+      `Full name: ${formData.fullName}`,
+      `Business email: ${formData.email}`,
+      `Location: ${formData.country || "—"}`,
+      `Company: ${formData.companyName || "—"}`,
+      `Project type: ${formData.projectType || "—"}`,
+      "",
+      "Project description:",
+      formData.projectDescription || "—",
+    ].join("\n");
+    window.location.href = buildMailtoUrl(
+      "Website contact: Project request",
+      body,
+    );
     closeContactModal();
-  };
+  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -61,7 +74,7 @@ export default function ContactModal() {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <div className="flex h-full flex-col overflow-y-scroll bg-gradient-to-b from-gray-50 to-white py-8 font-sans shadow-xl">
+                  <div className="flex h-full flex-col overflow-y-scroll bg-gradient-to-b from-gray-50 to-white py-8 font-sans text-gray-900 shadow-xl">
                     <div className="px-6 sm:px-8">
                       <div className="flex items-start justify-between">
                         <div>
@@ -101,7 +114,7 @@ export default function ContactModal() {
                                 id="fullName"
                                 value={formData.fullName}
                                 onChange={handleChange}
-                                className="block w-full rounded-lg border-gray-300 px-4 py-3 font-sans text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-sans text-base text-gray-900 shadow-sm placeholder:text-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                                 required
                                 placeholder="Your Name"
                               />
@@ -123,7 +136,7 @@ export default function ContactModal() {
                                 id="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="block w-full rounded-lg border-gray-300 px-4 py-3 font-sans text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-sans text-base text-gray-900 shadow-sm placeholder:text-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                                 required
                                 placeholder="Company Email"
                               />
@@ -144,7 +157,7 @@ export default function ContactModal() {
                                 id="country"
                                 value={formData.country}
                                 onChange={handleChange}
-                                className="block w-full rounded-lg border-gray-300 px-4 py-3 font-sans text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-sans text-base text-gray-900 shadow-sm placeholder:text-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                                 placeholder="Country"
                               />
                             </div>
@@ -164,7 +177,7 @@ export default function ContactModal() {
                                 id="companyName"
                                 value={formData.companyName}
                                 onChange={handleChange}
-                                className="block w-full rounded-lg border-gray-300 px-4 py-3 font-sans text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-sans text-base text-gray-900 shadow-sm placeholder:text-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                                 placeholder="Your company or startup name"
                               />
                             </div>
@@ -184,7 +197,7 @@ export default function ContactModal() {
                                 id="projectType"
                                 value={formData.projectType}
                                 onChange={handleChange}
-                                className="block w-full rounded-lg border-gray-300 px-4 py-3 font-sans text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-sans text-base text-gray-900 shadow-sm placeholder:text-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                                 placeholder="e.g., Web Application, Mobile App, SaaS Platform"
                               />
                             </div>
@@ -204,7 +217,7 @@ export default function ContactModal() {
                                 value={formData.projectDescription}
                                 onChange={handleChange}
                                 rows={4}
-                                className="block w-full rounded-lg border-gray-300 px-4 py-3 font-sans text-base shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-sans text-base text-gray-900 shadow-sm placeholder:text-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
                                 placeholder="Briefly describe your project goals, requirements, and timeline"
                               />
                             </div>
